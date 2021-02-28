@@ -1,5 +1,4 @@
-﻿
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ProfileBook.View
@@ -9,7 +8,7 @@ namespace ProfileBook.View
     {
         public SignUpView()
         {
-            InitializeComponent();
+                InitializeComponent();
         }
 
     }

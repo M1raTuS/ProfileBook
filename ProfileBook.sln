@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileBook.Android", "Prof
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileBook.iOS", "ProfileBook\ProfileBook.iOS\ProfileBook.iOS.csproj", "{9E27BCA5-F668-40FA-BA27-63D5A20BA645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileBook", "ProfileBook\ProfileBook\ProfileBook.csproj", "{7BDC7FB4-4259-4F67-AF10-7104096FB8EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileBook", "ProfileBook\ProfileBook\ProfileBook.csproj", "{7BDC7FB4-4259-4F67-AF10-7104096FB8EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

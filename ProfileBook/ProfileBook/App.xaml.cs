@@ -4,38 +4,24 @@ using ProfileBook.Services.Repository;
 using ProfileBook.Services.Settings;
 using ProfileBook.View;
 using ProfileBook.ViewModel;
-using System;
-using System.IO;
 using Xamarin.Forms;
 
 namespace ProfileBook
 {
     public partial class App : PrismApplication
     {
-        public const string DATABASE_NAME = "users.db";
-        public static Repository database;
-        public static Repository Database
-        {
-            get
-            {
-                if (database == null)
-                {
-                    database = new Repository(
-                        Path.Combine(
-                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DATABASE_NAME));
-                }
-                return database;
-            }
-        }
         public App()
         {
-            //MainPage = new NavigationPage(new SignInView());
+
         }
         #region ---Ovverides---
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //Services
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
 
+            //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignInView, SignInViewModel>();
             containerRegistry.RegisterForNavigation<SignUpView, SignUpViewModel>();
@@ -47,8 +33,7 @@ namespace ProfileBook
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync($"NavigationPage/{nameof(SignInView)}");
-            // NavigationService.NavigateAsync($"{nameof(MainListView)}");
+            NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
         }
         protected override void OnStart()
         {

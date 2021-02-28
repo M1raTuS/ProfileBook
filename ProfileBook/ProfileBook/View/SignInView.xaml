@@ -3,21 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.SignInView"
              Title="{Binding Title}">
+
            
     <Grid>
         <StackLayout VerticalOptions="Center" Grid.Row="1" Spacing="10" Margin="40">
             
             <Entry Text="{Binding Login}"
-               Placeholder="Login"
-               x:Name="LoginEntry"/>
-
+               Placeholder="Login"/>
+            
             <Entry Text="{Binding Password}"
                IsPassword="True"
-               Placeholder="Password"
-               x:Name="PasswordEntry" />
+               Placeholder="Password"/>
+            
         </StackLayout>
         <StackLayout VerticalOptions="Center" Margin="40" Grid.Row="3"  Spacing="10">
-            <Button Text="Sign In" BackgroundColor="DarkOrange" x:Name="SignInButton" IsEnabled="False" Command="{Binding NavigateCommand}"/>
+            <Button  Text="Sign In"  BackgroundColor="DarkOrange" Command="{Binding SignInCommand}" IsEnabled="{Binding ButtonEnabled}" />
             <Label HorizontalOptions = "Center"
                    VerticalOptions="CenterAndExpand">
                 <Label.FormattedText>
@@ -26,7 +26,7 @@
                               TextColor = "Blue"
                               TextDecorations = "Underline">
                             <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding CreateUserCommand}" />
+                                <TapGestureRecognizer Command="{Binding SignUpCommand}" />
                             </Span.GestureRecognizers>
                         </Span>
                     </FormattedString>

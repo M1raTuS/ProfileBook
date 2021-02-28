@@ -1,33 +1,48 @@
 ﻿using ProfileBook.Models;
 using SQLite;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ProfileBook.Services.Repository
 {
-    public class Repository
+    public class Repository : IRepository
     {
-        SQLiteConnection database;
-        public Repository(string databasePath)
+        //TODO: Сделать прослойку для репозитория и моделей
+        private Lazy<SQLiteAsyncConnection> _database;
+        public Repository()
         {
-            database = new SQLiteConnection(databasePath);
-            //database.CreateTable<Registrate>();
-            database.CreateTable<User>();
+            _database = new Lazy<SQLiteAsyncConnection>(() =>
+            {
+                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "profilebook.db3");
+                var database = new SQLiteAsyncConnection(path);
+
+                database.CreateTableAsync<UserModel>();
+                database.CreateTableAsync<RegistrateModel>();
+
+                return database;
+            });
         }
-        public IEnumerable<User> GetItems()
+
+        public async Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new()
         {
-            return database.Table<User>().ToList();
+            return await _database.Value.DeleteAsync(entity);
         }
-        public User GetItem(int id)
+
+        public async Task<List<T>> GetAllAsync<T>() where T : IEntityBase, new()
         {
-            return database.Get<User>(id);
+            return await _database.Value.Table<T>().ToListAsync();
         }
-        public int DeleteItem(int id)
+
+        public async Task<int> InsertAsync<T>(T entity) where T : IEntityBase, new()
         {
-            return database.Delete<User>(id);
+            return await _database.Value.InsertAsync(entity);
         }
-        public int SaveItem(User item)
+
+        public async Task<int> UpdateAsync<T>(T entity) where T : IEntityBase, new()
         {
-            return database.Insert(item);
+            return await _database.Value.UpdateAsync(entity);
         }
     }
 }

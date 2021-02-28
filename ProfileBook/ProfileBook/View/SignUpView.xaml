@@ -3,15 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.SignUpView"
              Title="{Binding Title}">
+    
+    
     <Grid>
         <StackLayout VerticalOptions="Center" Grid.Row="1"  Spacing="10" Padding="40">
-        <Entry Placeholder="Login" Text="{Binding Login}" />
-            <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" x:Name="Pass1"/>
-            <Entry Placeholder="ConfirmPassword" Text="" IsPassword="True" x:Name="Pass2" IsVisible="True"/>
+            <Entry Placeholder="Login" 
+                   Text="{Binding Login}"/>
+            <Entry Placeholder="Password" 
+                   Text="{Binding Password}" 
+                   IsPassword="True" />
+            <Entry Placeholder="ConfirmPassword" 
+                   Text="{Binding ConfirmPassword}" 
+                   IsPassword="True"/>
             
-    </StackLayout>
-        <StackLayout Orientation="Vertical" Margin="40" Grid.Row="4"  Spacing="10" >
-            <Button BackgroundColor="DarkOrange" Text="Sign Up" Command="{Binding GoBackCommand}"/>
+
+        </StackLayout>
+        <StackLayout Orientation="Vertical" Margin="40" Grid.Row="3" >
+            <Button BackgroundColor="DarkOrange" Text="Sign Up" Command="{Binding AddUserCommand}" IsEnabled="{Binding ButtonEnabled}"/>
         </StackLayout>
     </Grid>
 </ContentPage>

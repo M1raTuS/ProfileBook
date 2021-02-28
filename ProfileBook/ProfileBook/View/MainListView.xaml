@@ -2,22 +2,74 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.MainListView">
-    <StackLayout>
-        <ListView x:Name="usersList" ItemsSource="{Binding}" ItemSelected="OnItemSelected">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Main List" Priority="0"/>
+        <ToolbarItem Name="" Order="Primary" Priority="0" />
+        <ToolbarItem Name="" Order="Primary" Priority="0" />
+        <ToolbarItem Name="" Order="Primary" Priority="0" />
+        <ToolbarItem Name="" Order="Primary" Priority="0" />
+        <ToolbarItem Text="LogOut" Command="{Binding LogOutCommand}" IconImageSource="ic_exit_to_app.png"/>
+        <ToolbarItem Text="Settings" Command="{Binding SettingsCommand}" IconImageSource="ic_settings.png"/>
+    </ContentPage.ToolbarItems>
+
+    
+        <StackLayout>
+        <Grid>
+
+            <ListView x:Name="UsersListView"
+                      ItemsSource="{Binding Users}"
+                      IsVisible="True"
+                      SelectedItem="{Binding SelectedItem}"
+                      IsEnabled="{Binding ListEnabled}"
+                      HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <ViewCell.View>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Id}" FontSize="Medium" />
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Edit"
+                                          Command="{Binding Path=BindingContext.EditContext, Source={Reference UsersListView}}"
+                                          CommandParameter="{Binding .}"/>
+                                <MenuItem Text="Delete"
+                                          IsDestructive="True"
+                                          Command="{Binding Path=BindingContext.DeleteContext, Source={Reference UsersListView}}"
+                                          CommandParameter="{Binding .}"/>
+                            </ViewCell.ContextActions>
+                            <ViewCell.View>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{Binding ProfileImage}" WidthRequest="120" HeightRequest="60" />
+                            <StackLayout>
                                 <Label Text="{Binding NickName}" FontSize="Medium" />
                                 <Label Text="{Binding Name}" FontSize="Medium" />
-                                <Label Text="{Binding Login}" FontSize="Medium" />
-                            </StackLayout>
-                        </ViewCell.View>
-                    </ViewCell>
+                                    <Label Text="{Binding DateCreate}" FontSize="Medium" />
+                                    <Label Text="{Binding Id}" FontSize="Medium" />
+                                    <Label Text="{Binding RegId}" FontSize="Medium" />
+                                </StackLayout>
+                        </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Label Text="No profiles added" 
+               IsVisible="{Binding LabelVisible}"
+               FontSize="30" 
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"
+               TextColor="Red"/>
+        <Button HorizontalOptions="End"
+                VerticalOptions="End"
+                Command="{Binding AddProfileFloatingButtonCommand}" 
+                CornerRadius="100"
+                BorderWidth="10"
+                Padding="0 , 32"
+                Margin="30,30"
+                BorderColor="Black"
+                BackgroundColor="Blue"
+                ImageSource="ic_add.png"/>
+            
+        </Grid>
     </StackLayout>
+
+    
 </ContentPage>

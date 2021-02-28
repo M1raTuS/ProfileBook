@@ -1,9 +1,9 @@
 ﻿using SQLite;
+using System;
 
 namespace ProfileBook.Models
 {
-    [Table("Users")]
-    public class User
+    public class UserModel : IEntityBase
     {
         [PrimaryKey, AutoIncrement, Column("Id")]
         public int Id { get; set; }
@@ -12,9 +12,7 @@ namespace ProfileBook.Models
         public string NickName { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public string Login { get; set; }
-        public string Password { get; set; }
-
+        public DateTime DateCreate { get; set; }
+        public int RegId { get; set; }
     }
 }

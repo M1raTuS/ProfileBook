@@ -9,7 +9,7 @@ namespace ProfileBook.View
     {
         public AddEditProfileView()
         {
-            InitializeComponent();
+                InitializeComponent();
         }
     }
 }

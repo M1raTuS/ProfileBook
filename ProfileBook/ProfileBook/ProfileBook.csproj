@@ -11,6 +11,174 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\drawable-hdpi\ic_add.png" />
+    <None Remove="Resources\drawable-hdpi\ic_camera_alt.png" />
+    <None Remove="Resources\drawable-hdpi\ic_camera_alt_black.png" />
+    <None Remove="Resources\drawable-hdpi\ic_collections.png" />
+    <None Remove="Resources\drawable-hdpi\ic_collections_black.png" />
+    <None Remove="Resources\drawable-hdpi\ic_exit_to_app.png" />
+    <None Remove="Resources\drawable-hdpi\ic_save.png" />
+    <None Remove="Resources\drawable-hdpi\ic_settings.png" />
+    <None Remove="Resources\drawable-mdpi\ic_add.png" />
+    <None Remove="Resources\drawable-mdpi\ic_camera_alt.png" />
+    <None Remove="Resources\drawable-mdpi\ic_camera_alt_black.png" />
+    <None Remove="Resources\drawable-mdpi\ic_collections.png" />
+    <None Remove="Resources\drawable-mdpi\ic_collections_black.png" />
+    <None Remove="Resources\drawable-mdpi\ic_exit_to_app.png" />
+    <None Remove="Resources\drawable-mdpi\ic_save.png" />
+    <None Remove="Resources\drawable-mdpi\ic_settings.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_add.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_camera_alt.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_camera_alt_black.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_collections.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_collections_black.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_exit_to_app.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_save.png" />
+    <None Remove="Resources\drawable-xhdpi\ic_settings.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_add.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_camera_alt.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_camera_alt_black.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_collections.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_collections_black.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_exit_to_app.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_save.png" />
+    <None Remove="Resources\drawable-xxhdpi\ic_settings.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_add.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_camera_alt.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_camera_alt_black.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_collections.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_collections_black.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_exit_to_app.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_save.png" />
+    <None Remove="Resources\drawable-xxxhdpi\ic_settings.png" />
+    <None Remove="Resources\pic_profile.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_add.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_camera_alt.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_camera_alt_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_collections.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_collections_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_exit_to_app.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_save.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-hdpi\ic_settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_add.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_camera_alt.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_camera_alt_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_collections.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_collections_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_exit_to_app.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_save.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-mdpi\ic_settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_add.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_camera_alt.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_camera_alt_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_collections.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_collections_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_exit_to_app.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_save.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xhdpi\ic_settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_add.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_camera_alt.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_camera_alt_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_collections.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_collections_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_exit_to_app.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_save.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxhdpi\ic_settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_add.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_camera_alt.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_camera_alt_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_collections.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_collections_black.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_exit_to_app.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_save.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\drawable-xxxhdpi\ic_settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\pic_profile.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
