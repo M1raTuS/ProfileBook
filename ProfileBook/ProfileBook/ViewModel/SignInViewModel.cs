@@ -69,7 +69,8 @@ namespace ProfileBook.ViewModel
 
         private async void SignInUser(object obj)
         {
-            if (CheckDb(Login, Password))
+            var res = _autorization.SignIn(Login,Password);
+            if (res)
             {
                 await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }

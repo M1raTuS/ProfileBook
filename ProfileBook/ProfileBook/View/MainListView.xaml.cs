@@ -9,7 +9,6 @@ namespace ProfileBook.View
         public MainListView()
         {
             InitializeComponent();
-
         }
     }
 }

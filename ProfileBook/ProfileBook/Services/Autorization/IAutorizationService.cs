@@ -5,5 +5,7 @@
         bool IsAutorized { get; }
         void Unauthorize();
         int GetCurrentUserId();
+        bool SignIn(string Login, string Password);
+
     }
 }
