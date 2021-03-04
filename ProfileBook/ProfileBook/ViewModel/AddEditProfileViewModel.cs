@@ -22,11 +22,61 @@ namespace ProfileBook.ViewModel
             _navigationService = navigationService;
             _repository = repository;
 
-            _user = new UserModel();
-            _reg = new RegistrateModel();
+            //_user = new UserModel();
+            //_reg = new RegistrateModel();
         }
         public ICommand SaveCommand => new Command(Save);
 
+        private UserModel _userModel;
+        public UserModel userModel
+        {
+            get => _userModel;
+            set => SetProperty(ref _userModel, value);
+        }
+        private int _id;
+
+        public int Id
+        {
+            get => _id;
+            set => SetProperty(ref _id, value);
+        }
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+
+        private string _nickName;
+
+        public string NickName
+        {
+            get => _nickName;
+            set => SetProperty(ref _nickName, value);
+        }
+        private string _description;
+
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+
+        }
+        private string _profileImage;
+        public string ProfileImage
+        {
+            get
+            {
+                if (_profileImage != null)
+                {
+                    return _profileImage;
+                }
+
+                return "pic_profile.png";
+            }
+            set => SetProperty(ref _profileImage, value);
+        }
         private async void Save()
         {
             try
@@ -35,17 +85,35 @@ namespace ProfileBook.ViewModel
                 {
                     var user = new UserModel()
                     {
+                        Id = Id,
                         NickName = NickName,
                         Name = Name,
                         DateCreate = DateTime.Now,
                         Description = Description,
-                        RegId = Id
+                        ProfileImage = ProfileImage
+                       
+                        //RegId = Id
 
                     };
-                    await _repository.InsertAsync(user);
+                    if (Id>0)
+                    {
+                        var nav = new NavigationParameters();
+                        nav.Add(nameof(UserModel), user);
 
-                    await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
-                    //_navigationService.GoBackAsync();
+                        await _repository.UpdateAsync(user);
+                      await  _navigationService.GoBackAsync(nav);
+                        //await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
+                    }
+                    else
+                    {
+                        var nav = new NavigationParameters();
+                        nav.Add(nameof(UserModel), user);
+
+                        await _repository.InsertAsync(user);
+                        //await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
+                       await _navigationService.GoBackAsync(nav);
+                    }
+
                 }
                 else
                 {
@@ -68,34 +136,42 @@ namespace ProfileBook.ViewModel
             }
             return false;
         }
-        #region -Public properties-
-
-        #endregion
 
         #region -Overrides-
-        public async override Task InitializeAsync(INavigationParameters parameters)
-        {
-            var _user = await _repository.GetAllAsync<UserModel>();
-            Users = new ObservableCollection<UserModel>(_user);
-        }
+        //public async override void Initialize(INavigationParameters parameters)
+        //{
+        //    var _user = await _repository.GetAllAsync<UserModel>();
+        //    Users = new ObservableCollection<UserModel>(_user);
+        //}
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
 
             if (parameters.TryGetValue(nameof(UserModel), out UserModel user))
             {
+                userModel = user;
                 Name = user.Name;
                 NickName = user.NickName;
                 Description = user.Description;
+                Id = user.Id;
+                ProfileImage = user.ProfileImage;
             }
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-            if (args.PropertyName == Users.ToString())
+            if (args.PropertyName == nameof(Name) ||
+                args.PropertyName == nameof(NickName) ||
+                args.PropertyName == nameof(Description) ||
+                args.PropertyName == nameof(Id) ||
+                args.PropertyName == nameof(ProfileImage))
             {
-
+                Name = Name;
+                NickName = NickName;
+                Description = Description; 
+                ProfileImage = ProfileImage;
+                Id = Id;
             }
         }
         #endregion

@@ -1,5 +1,7 @@
 ﻿using ProfileBook.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ProfileBook.Services.Repository
@@ -10,6 +12,9 @@ namespace ProfileBook.Services.Repository
         Task<int> UpdateAsync<T>(T entity) where T : IEntityBase, new();
         Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new();
         Task<List<T>> GetAllAsync<T>() where T : IEntityBase, new();
+        Task<T> GetOneAsync<T>(int Id) where T : IEntityBase, new();
+        Task<List<T>> FindAsync<T>(Expression<Func<T, bool>> pred = null) where T : class, IEntityBase, new();
+        //Task<List<T>> Get<T>(Expression<Func<T, bool>> predicate = null, Expression<Func<T, T>> orderBy = null) where T : class, IEntityBase, new();
 
 
     }

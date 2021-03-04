@@ -1,5 +1,6 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Repository;
 using ProfileBook.View;
 using System;
@@ -15,14 +16,17 @@ namespace ProfileBook.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
+        private readonly IAutorizationService _autorization;
 
         public SignInViewModel(INavigationService navigationService,
-                                IRepository repository)
+                                IRepository repository,
+                                IAutorizationService autorization)
         {
             Title = "Users SignIn";
 
             _navigationService = navigationService;
             _repository = repository;
+            _autorization = autorization;
 
         }
 
@@ -63,17 +67,16 @@ namespace ProfileBook.ViewModel
 
         #region -Methods-
 
-        private async void SignInUser()
+        private async void SignInUser(object obj)
         {
             if (CheckDb(Login, Password))
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid login or password!", "Ok");
-                Password = "";
+                await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else
             {
-                await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
-
+                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid login or password!", "Ok");
+                Password = "";
             }
         }
 
@@ -97,10 +100,16 @@ namespace ProfileBook.ViewModel
             {
                 if (item.Login == log.ToString() && item.Password == pas.ToString())
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
+        }
+
+        private async void Load()
+        {
+            var _reg = await _repository.GetAllAsync<RegistrateModel>();
+            Regs = new ObservableCollection<RegistrateModel>(_reg);
         }
 
         #endregion
@@ -125,15 +134,17 @@ namespace ProfileBook.ViewModel
             }
         }
 
-        public async override Task InitializeAsync(INavigationParameters parameters)
-        {
-            var _reg = await _repository.GetAllAsync<RegistrateModel>();
-            Regs = new ObservableCollection<RegistrateModel>(_reg);
-        }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+
+            Load();
+
+            if (parameters.TryGetValue(nameof(RegistrateModel), out RegistrateModel reg))
+            {
+                Login = reg.Login;
+            }
         }
         #endregion
     }

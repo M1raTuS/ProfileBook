@@ -1,5 +1,6 @@
 ﻿using Prism.Ioc;
 using Prism.Unity;
+using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Repository;
 using ProfileBook.Services.Settings;
 using ProfileBook.View;
@@ -20,6 +21,7 @@ namespace ProfileBook
             //Services
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
+            containerRegistry.RegisterInstance<IAutorizationService>(Container.Resolve<AutorizationService>());
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -27,6 +29,7 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<SignUpView, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<MainListView, MainListViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfileView, AddEditProfileViewModel>();
+            containerRegistry.RegisterForNavigation<ProfileImageView, ProfileImageViewModel>();
         }
 
         protected override void OnInitialized()
