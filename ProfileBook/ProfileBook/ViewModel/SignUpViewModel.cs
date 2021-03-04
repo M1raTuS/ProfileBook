@@ -1,11 +1,9 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Repository;
-using ProfileBook.Validation;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -24,6 +22,8 @@ namespace ProfileBook.ViewModel
             _navigationService = navigationService;
             _repository = repository;
 
+
+            Regs = new ObservableCollection<RegistrateModel>();
         }
 
         #region -Public properties-
@@ -67,46 +67,48 @@ namespace ProfileBook.ViewModel
         #endregion
 
         #region -Methods-
-        private async void AddUser()
+        private async void AddUser(object obj)
         {
-            if (Password == ConfirmPassword)
-            {
-                var LoginValidation = Validator.StringValid(Login, Validator.Login);
-                var PasswordValidation = Validator.StringValid(Password, Validator.Password);
+            //if (Password == ConfirmPassword)
+            //{
+            //    var LoginValidation = Validator.StringValid(Login, Validator.Login);
+            //    var PasswordValidation = Validator.StringValid(Password, Validator.Password);
 
-                if (!LoginValidation)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Ok");
-                }
-                else if (!PasswordValidation)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Ok");
-                }
-                else if (!CheckDb(Login))
+            //    if (!LoginValidation)
+            //    {
+            //        await Application.Current.MainPage.DisplayAlert("Alert", "Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Ok");
+            //    }
+            //    else if (!PasswordValidation)
+            //    {
+            //        await Application.Current.MainPage.DisplayAlert("Alert", "Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Ok");
+            //    }
+                 if (CheckDb(Login))//else
                 {
                     await Application.Current.MainPage.DisplayAlert("Alert", "Этот логин уже занят", "Ok");
                 }
                 else
-                {
-                    var reg = new RegistrateModel()
-                    {
-                        Login = Login,
-                        Password = Password
-                    };
-                    var id = await _repository.InsertAsync(reg);
-
-                    reg.Id = id;
-
-                    Regs.Add(reg);
-
-                    //_navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
-                    await _navigationService.GoBackAsync();
-                }
-            }
-            else
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Значения в полях Password и ConfirmPassword должны совпадать.", "Ok");
+                var reg = new RegistrateModel()
+                {
+                    Login = Login,
+                    Password = Password
+                };
+                
+                var id = await _repository.InsertAsync(reg);
+                reg.Id = id;
+
+                Regs.Add(reg);
+
+                var nav = new NavigationParameters();
+                nav.Add(nameof(RegistrateModel), (RegistrateModel)reg);
+
+                await _navigationService.GoBackAsync(nav, false, true);
             }
+            //}
+            //else
+            //{
+            //    await Application.Current.MainPage.DisplayAlert("Alert", "Значения в полях Password и ConfirmPassword должны совпадать.", "Ok");
+            //}
         }
 
         private bool CanSignIn()
@@ -124,17 +126,18 @@ namespace ProfileBook.ViewModel
             {
                 if (item.Login == log.ToString())
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+
+            return false;
         }
 
         #endregion
 
         #region -Overrides-
 
-        public async override Task InitializeAsync(INavigationParameters parameters)
+        public async override void Initialize(INavigationParameters parameters)
         {
             var _reg = await _repository.GetAllAsync<RegistrateModel>();
             Regs = new ObservableCollection<RegistrateModel>(_reg);
@@ -158,9 +161,6 @@ namespace ProfileBook.ViewModel
             }
         }
         #endregion
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-        }
     }
 }
 

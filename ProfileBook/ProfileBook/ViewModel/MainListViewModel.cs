@@ -1,10 +1,12 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Repository;
 using ProfileBook.View;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -17,6 +19,7 @@ namespace ProfileBook.ViewModel
 
         private INavigationService _navigationService;
         private IRepository _repository;
+        private IAutorizationService _autorization;
 
         public MainListViewModel(INavigationService navigationService,
                                  IRepository repository)
@@ -25,9 +28,13 @@ namespace ProfileBook.ViewModel
             _repository = repository;
 
             Users = new ObservableCollection<UserModel>();
+
+            LoadUsers();
+
+
         }
 
-
+        
         #region -Public properties-
 
         private UserModel _selectedItem;
@@ -66,40 +73,34 @@ namespace ProfileBook.ViewModel
         {
             await _navigationService.NavigateAsync(nameof(AddEditProfileView));
         }
-        private async void TapCommand()
+        private async void TapCommand(object user)
         {
-            //await _navigationService.NavigateAsync(nameof(AddEditProfileView));
-        }
-        private async void EditContextMenu()
-        {
-            if (SelectedItem != null)
-            {
-                var user = new UserModel()
-                {
-                    Id = SelectedItem.Id,
-                    Name = SelectedItem.Name,
-                    NickName = SelectedItem.NickName,
-                    Description = SelectedItem.Description
-                };
-                await _repository.UpdateAsync(user);
-                await _navigationService.NavigateAsync(nameof(AddEditProfileView));
-            }
-        }
-        private async void DeleteContextMenu()
-        {
-            if (SelectedItem != null)
-            {
-                if (await Application.Current.MainPage.DisplayAlert("Alert", "Подтверждаете ли вы удаление?", "Ok", "Cancel"))
-                {
-                    await _repository.DeleteAsync(SelectedItem);
+            var nav = new NavigationParameters();
+            nav.Add(nameof(UserModel), (UserModel)user);
 
-                    Users.Remove(SelectedItem);
-                    LoadUsers();
-                }
+            // await _navigationService.NavigateAsync(nameof(ProfileImageView), nav, false, true);
+        }
+        private async void EditContextMenu(object obj)
+        {
+            var nav = new NavigationParameters();
+            nav.Add(nameof(UserModel), (UserModel)obj);
+
+            await _navigationService.NavigateAsync(nameof(AddEditProfileView), nav, false, true);
+
+        }
+        private async void DeleteContextMenu(object obj)
+        {
+            if (await Application.Current.MainPage.DisplayAlert("Alert", "Подтверждаете ли вы удаление?", "Ok", "Cancel"))
+            {
+                await _repository.DeleteAsync((UserModel)obj);
+
+                LoadUsers();
             }
+
         }
         private async void LoadUsers()
         {
+           
             var _users = await _repository.GetAllAsync<UserModel>();
             Users = new ObservableCollection<UserModel>(_users);
         }
@@ -125,11 +126,33 @@ namespace ProfileBook.ViewModel
             }
         }
 
-        public async override Task InitializeAsync(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            LoadUsers();
+            if (parameters.TryGetValue(nameof(UserModel), out UserModel user))
+            {
+                LoadUsers();
+            }
         }
         #endregion
+
+
+        public ICommand test => new Command(testt);
+
+        private async void testt(object obj)
+        {   
+            var _regs = await _repository.GetAllAsync<RegistrateModel>();
+            Regs = new ObservableCollection<RegistrateModel>(_regs);
+
+            try
+            {
+                var tr = await _repository.FindAsync<RegistrateModel>(q => q.Id == 2);
+            }
+            catch (Exception e)
+            {
+
+                
+            }
+        }
     }
 }
 

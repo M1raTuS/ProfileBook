@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProfileBook.ViewModel
 {
-    public class BaseViewModel : BindableBase, IInitializeAsync, INavigationAware
+    public class BaseViewModel : BindableBase, IInitialize, INavigationAware
     {
         public UserModel _user;
         public RegistrateModel _reg;
@@ -126,9 +126,9 @@ namespace ProfileBook.ViewModel
 
         }
 
-        public virtual Task InitializeAsync(INavigationParameters parameters)
+        public virtual void Initialize(INavigationParameters parameters)
         {
-            return Task.CompletedTask;
+            
         }
 
         #endregion

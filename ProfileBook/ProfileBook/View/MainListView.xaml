@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProfileBook.View.MainListView">
+             x:Class="ProfileBook.View.MainListView"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Main List" Priority="0"/>
@@ -19,10 +20,14 @@
 
             <ListView x:Name="UsersListView"
                       ItemsSource="{Binding Users}"
-                      IsVisible="True"
                       SelectedItem="{Binding SelectedItem}"
                       IsEnabled="{Binding ListEnabled}"
                       HasUnevenRows="True">
+                <ListView.Behaviors>
+                    <b:EventToCommandBehavior EventName="ItemTapped"
+                                              Command="{Binding SelectedCommand}"
+                                              EventArgsParameterPath="Item"/>
+                </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -36,14 +41,13 @@
                                           CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
                             <ViewCell.View>
-                        <StackLayout Orientation="Horizontal">
-                            <Image Source="{Binding ProfileImage}" WidthRequest="120" HeightRequest="60" />
+                        <StackLayout Orientation="Horizontal" Margin="0,20">
+                            <Image Source="{Binding ProfileImage}" WidthRequest="160" HeightRequest="100" />
                             <StackLayout>
                                 <Label Text="{Binding NickName}" FontSize="Medium" />
                                 <Label Text="{Binding Name}" FontSize="Medium" />
                                     <Label Text="{Binding DateCreate}" FontSize="Medium" />
                                     <Label Text="{Binding Id}" FontSize="Medium" />
-                                    <Label Text="{Binding RegId}" FontSize="Medium" />
                                 </StackLayout>
                         </StackLayout>
                             </ViewCell.View>
@@ -68,6 +72,17 @@
                 BackgroundColor="Blue"
                 ImageSource="ic_add.png"/>
             
+            <Button HorizontalOptions="End"
+                VerticalOptions="End"
+                Command="{Binding test}" 
+                CornerRadius="100"
+                BorderWidth="10"
+                Padding="0 , 32"
+                Margin="30,130"
+                BorderColor="Black"
+                BackgroundColor="Red"
+                ImageSource="ic_add.png"/>
+
         </Grid>
     </StackLayout>
 
