@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProfileBook.View.SettingsView">
+
+
+    <Grid>
+        <Grid  HorizontalOptions="Center"
+            VerticalOptions="StartAndExpand">
+            <Label Text="Выберите тип сортировки"
+                   Grid.Row="2"
+                   FontSize="Large"/>
+        </Grid>
+        
+        <Grid 
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+          ColumnDefinitions="0.3*,0.3*,0.3*">
+
+      
+        <RadioButton Grid.Row="0"
+            GroupName="Sorting"
+                         HorizontalOptions="End"/>
+        <Label Text="Cортировка - по имени"
+               Grid.Row="0"
+                   Grid.Column="1"/>
+        <RadioButton Grid.Row="1"
+                GroupName="Sorting"
+                     HorizontalOptions="End"/>
+        <Label Text="Cортировка - по NickName"
+                     Grid.Row="1"
+                Grid.Column="1"/>
+            <RadioButton Grid.Row="2"
+                    GroupName="Sorting"
+                         HorizontalOptions="End"/>
+        <Label Text="Cортировка - по дате добавления в базу данных"
+                       Grid.Row="2"
+                    Grid.Column="1"/>
+
+
+          
+                <Label Text="Темная тема"
+                        Grid.Row="4"
+                        Grid.Column="0"
+                       FontSize="Large"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"/>
+            
+            <CheckBox Grid.Row="4"
+                      Grid.Column="2"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"/>
+
+            <Label Text="Выберите язык"
+                        Grid.Row="6"
+                        Grid.Column="1"
+                       FontSize="Large"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"/>
+            <Picker x:Name="picker"
+                    Grid.Row="7"
+                        Grid.Column="1">
+                <Picker.Items>
+                    <x:String>Русский</x:String>
+                    <x:String>Английский</x:String>
+                </Picker.Items>
+            </Picker>
+
+        </Grid>
+        
+    </Grid>
+    
+</ContentPage>

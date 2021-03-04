@@ -6,7 +6,6 @@ using ProfileBook.View;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -67,9 +66,11 @@ namespace ProfileBook.ViewModel
 
         #region -Methods-
 
-        private async void SignInUser(object obj)
+        private async void SignInUser()
         {
-            var res = _autorization.SignIn(Login,Password);
+            //TODO: Не заходит сразу после регистрации. Пофиксить!!! 
+            var res = _autorization.SignIn(Login, Password);
+
             if (res)
             {
                 await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");

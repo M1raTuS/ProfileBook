@@ -1,6 +1,5 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
-using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -8,7 +7,7 @@ namespace ProfileBook.ViewModel
 {
     public class ProfileImageViewModel : BaseViewModel
     {
-        private INavigationService _navigationService;
+        private readonly INavigationService _navigationService;
         public ProfileImageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
@@ -25,7 +24,7 @@ namespace ProfileBook.ViewModel
         }
         public override void Initialize(INavigationParameters parameters)
         {
-             base.Initialize(parameters);
+            base.Initialize(parameters);
 
             if (parameters.TryGetValue(nameof(UserModel), out UserModel user))
             {

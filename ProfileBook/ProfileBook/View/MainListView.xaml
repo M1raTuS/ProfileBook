@@ -47,21 +47,22 @@
                                 <Label Text="{Binding NickName}" FontSize="Medium" />
                                 <Label Text="{Binding Name}" FontSize="Medium" />
                                     <Label Text="{Binding DateCreate}" FontSize="Medium" />
-                                    <Label Text="{Binding Id}" FontSize="Medium" />
-                                </StackLayout>
+                                    </StackLayout>
                         </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label Text="No profiles added" 
+            
+            <Label Text="No profiles added" 
                IsVisible="{Binding LabelVisible}"
                FontSize="30" 
                HorizontalOptions="CenterAndExpand"
                VerticalOptions="CenterAndExpand"
                TextColor="Red"/>
-        <Button HorizontalOptions="End"
+            
+            <Button HorizontalOptions="End"
                 VerticalOptions="End"
                 Command="{Binding AddProfileFloatingButtonCommand}" 
                 CornerRadius="100"
@@ -71,18 +72,6 @@
                 BorderColor="Black"
                 BackgroundColor="Blue"
                 ImageSource="ic_add.png"/>
-            
-            <Button HorizontalOptions="End"
-                VerticalOptions="End"
-                Command="{Binding test}" 
-                CornerRadius="100"
-                BorderWidth="10"
-                Padding="0 , 32"
-                Margin="30,130"
-                BorderColor="Black"
-                BackgroundColor="Red"
-                ImageSource="ic_add.png"/>
-
         </Grid>
     </StackLayout>
 

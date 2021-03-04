@@ -1,11 +1,14 @@
-﻿using Prism.Navigation;
+﻿using Acr.UserDialogs;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autorization;
+using ProfileBook.Services.Profile;
 using ProfileBook.Services.Repository;
-using ProfileBook.View;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -15,17 +18,30 @@ namespace ProfileBook.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
+        private readonly IAutorizationService _autorization;
+        private readonly IProfileService _profile;
 
         public AddEditProfileViewModel(INavigationService navigationService,
-                                        IRepository repository)
+                                        IRepository repository,
+                                        IAutorizationService autorization,
+                                 IProfileService profile)
         {
             _navigationService = navigationService;
             _repository = repository;
+            _autorization = autorization;
+            _profile = profile;
+
 
             //_user = new UserModel();
             //_reg = new RegistrateModel();
         }
         public ICommand SaveCommand => new Command(Save);
+        // public ICommand DeleteContext => new Command(DeleteContextMenu);
+        public ICommand ImageTappedCommand => new Command(ImageTap);
+
+
+
+
 
         private UserModel _userModel;
         public UserModel userModel
@@ -39,6 +55,13 @@ namespace ProfileBook.ViewModel
         {
             get => _id;
             set => SetProperty(ref _id, value);
+        }
+        private int _regId;
+
+        public int RegId
+        {
+            get => _regId;
+            set => SetProperty(ref _regId, value);
         }
         private string _name;
 
@@ -90,28 +113,26 @@ namespace ProfileBook.ViewModel
                         Name = Name,
                         DateCreate = DateTime.Now,
                         Description = Description,
-                        ProfileImage = ProfileImage
-                       
-                        //RegId = Id
-
+                        ProfileImage = ProfileImage,
+                        RegId = _autorization.GetCurrentId
                     };
-                    if (Id>0)
+                    if (Id > 0)
                     {
                         var nav = new NavigationParameters();
                         nav.Add(nameof(UserModel), user);
 
-                        await _repository.UpdateAsync(user);
-                      await  _navigationService.GoBackAsync(nav);
-                        //await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
+
+                        await _profile.UpdateProfileAsync(user);
+                        await _navigationService.GoBackAsync(nav);
                     }
                     else
                     {
                         var nav = new NavigationParameters();
                         nav.Add(nameof(UserModel), user);
 
-                        await _repository.InsertAsync(user);
-                        //await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
-                       await _navigationService.GoBackAsync(nav);
+
+                        await _profile.SaveProfileAsync(user);
+                        await _navigationService.GoBackAsync(nav);
                     }
 
                 }
@@ -138,11 +159,6 @@ namespace ProfileBook.ViewModel
         }
 
         #region -Overrides-
-        //public async override void Initialize(INavigationParameters parameters)
-        //{
-        //    var _user = await _repository.GetAllAsync<UserModel>();
-        //    Users = new ObservableCollection<UserModel>(_user);
-        //}
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
@@ -169,11 +185,70 @@ namespace ProfileBook.ViewModel
             {
                 Name = Name;
                 NickName = NickName;
-                Description = Description; 
+                Description = Description;
                 ProfileImage = ProfileImage;
                 Id = Id;
             }
         }
-        #endregion
+        #endregion 
+        private void ImageTap()
+        {
+            var file = new ActionSheetConfig()
+                .SetTitle("Choose your action")
+                .Add("Camera", () => OpenCamera(), "ic_camera_alt")
+                .Add("Gallery", () => OpenGalery(), "ic_collections")
+                .SetCancel();
+
+            UserDialogs.Instance.ActionSheet(file);
+        }
+
+        private async void OpenGalery()
+        {
+            try
+            {
+                if (CrossMedia.Current.IsPickPhotoSupported)
+                {
+                    MediaFile img = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions());
+                    if (img != null)
+                    {
+                        ProfileImage = img.Path;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+        private async void OpenCamera()
+        {
+            try
+            {
+                if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsPickPhotoSupported)
+                {
+                    MediaFile img = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                    {
+                        PhotoSize = PhotoSize.Medium,
+                        SaveToAlbum = true,
+                        //SaveMetaData = true,
+                        Directory = "Photo",
+                        //MaxWidthHeight = 1500,
+                        //CompressionQuality = 75,
+                        //RotateImage = Device.RuntimePlatform == Device.Android ? true : false,
+                        Name = $"{DateTime.Now}.jpg"
+                    });
+                    if (img != null)
+                    {
+                        ProfileImage = img.Path;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
     }
 }

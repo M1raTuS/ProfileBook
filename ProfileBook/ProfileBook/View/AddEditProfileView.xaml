@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProfileBook.View.AddEditProfileView">
+             x:Class="ProfileBook.View.AddEditProfileView"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add Profile" Priority="0"/>
@@ -12,12 +13,30 @@
         <ToolbarItem Text="" Command="{Binding SaveCommand}" IconImageSource="ic_save.png" Priority="1"/>
     </ContentPage.ToolbarItems>
 
+
+
+
     <Grid>
+        
         <StackLayout  Grid.Row="0">
-            <Image Source="{Binding ProfileImage}"
+           <!-- <Image Source="{Binding ProfileImage}"
                    Margin="50,0"
                    HorizontalOptions="Center"
-                   VerticalOptions="Start"/>
+                   VerticalOptions="Start"/> -->
+            <ffimageloading:CachedImage 
+                    Source="{Binding ProfileImage}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     WidthRequest="300"
+                     HeightRequest="300"
+                    Aspect="AspectFit"
+                    LoadingPlaceholder= "pic_profile.png"
+                    ErrorPlaceholder= "pic_profile.png"
+                    DownsampleToViewSize = "true">
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ImageTappedCommand}"/>
+                </ffimageloading:CachedImage.GestureRecognizers>
+            </ffimageloading:CachedImage>
         </StackLayout>
         <StackLayout VerticalOptions="StartAndExpand" 
                      Margin="30,0" 

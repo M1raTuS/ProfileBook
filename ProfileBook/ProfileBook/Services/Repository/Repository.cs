@@ -11,7 +11,7 @@ namespace ProfileBook.Services.Repository
     public class Repository : IRepository
     {
         //TODO: Сделать прослойку для репозитория и моделей
-        private Lazy<SQLiteAsyncConnection> _database;
+        private readonly Lazy<SQLiteAsyncConnection> _database;
         public Repository()
         {
             _database = new Lazy<SQLiteAsyncConnection>(() =>

@@ -1,5 +1,6 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Repository;
 using System;
 using System.Collections.ObjectModel;
@@ -13,14 +14,17 @@ namespace ProfileBook.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
+        private readonly IAutorizationService _autorization;
 
         public SignUpViewModel(INavigationService navigationService,
-                                IRepository repository)
+                                IRepository repository,
+                                IAutorizationService autorization)
         {
             Title = "Users SignUp";
 
             _navigationService = navigationService;
             _repository = repository;
+            _autorization = autorization;
 
 
             Regs = new ObservableCollection<RegistrateModel>();
@@ -102,7 +106,7 @@ namespace ProfileBook.ViewModel
                 var nav = new NavigationParameters();
                 nav.Add(nameof(RegistrateModel), (RegistrateModel)reg);
 
-                await _navigationService.GoBackAsync(nav, false, true);
+                 await _navigationService.GoBackAsync(nav, false, true);
             }
             //}
             //else
