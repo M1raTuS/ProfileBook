@@ -2,6 +2,7 @@
 using ProfileBook.Models;
 using ProfileBook.Services.Repository;
 using ProfileBook.ViewModel;
+using System.Collections.ObjectModel;
 
 namespace ProfileBook.Services.Autorization
 {
@@ -10,6 +11,7 @@ namespace ProfileBook.Services.Autorization
         private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
 
+        private int ID;
 
         public AutorizationService(INavigationService navigationService,
                                    IRepository repository)
@@ -17,6 +19,9 @@ namespace ProfileBook.Services.Autorization
             _navigationService = navigationService;
             _repository = repository;
 
+
+            Regs = new ObservableCollection<RegistrateModel>();
+            CheckDb();
         }
         private bool _isAutorized;
 
@@ -26,7 +31,7 @@ namespace ProfileBook.Services.Autorization
         }
 
         public int _getCurrentId;
-        private int GetCurrentId 
+        private int GetCurrentId
         {
             get => _getCurrentId;
             set => SetProperty(ref _getCurrentId, value);
@@ -53,6 +58,26 @@ namespace ProfileBook.Services.Autorization
             {
 
             }
+        }
+
+        public async void CheckDb()
+        {
+            var _reg = await _repository.GetAllAsync<RegistrateModel>();
+            Regs = new ObservableCollection<RegistrateModel>(_reg);
+        }
+
+        public bool SignIn(string Login, string Password)
+        {
+            CheckDb();
+            foreach (var item in Regs)
+            {
+                if (item.Login == Login.ToString() && item.Password == Password.ToString())
+                {
+                    ID = item.Id;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
