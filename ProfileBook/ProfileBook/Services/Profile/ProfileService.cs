@@ -23,7 +23,18 @@ namespace ProfileBook.Services.Profile
             await _repository.DeleteAsync(user);
         }
 
-        public async Task<List<UserModel>> GetProfileListAsync()
+        public async Task<List<RegistrateModel>> GetAllProfileListAsync()
+        {
+            var users = new List<RegistrateModel>();
+            var list = await _repository.GetAllAsync<RegistrateModel>();
+            if (list.Count > 0)
+            {
+                users.AddRange(list);
+            }
+            return users;
+        }
+
+        public async Task<List<UserModel>> GetProfileListByIdAsync()
         {
             var users = new List<UserModel>();
             var Id = _autorizationService.GetCurrentUserId();
@@ -34,6 +45,7 @@ namespace ProfileBook.Services.Profile
             }
             return users;
         }
+
 
         public async Task SaveProfileAsync(UserModel user)
         {

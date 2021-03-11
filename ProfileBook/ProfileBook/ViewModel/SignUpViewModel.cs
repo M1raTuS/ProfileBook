@@ -1,6 +1,7 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Autorization;
+using ProfileBook.Services.Profile;
 using ProfileBook.Services.Repository;
 using System;
 using System.Collections.ObjectModel;
@@ -15,29 +16,22 @@ namespace ProfileBook.ViewModel
         private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
         private readonly IAutorizationService _autorization;
+        private readonly IProfileService _profile;
 
         public SignUpViewModel(INavigationService navigationService,
                                 IRepository repository,
-                                IAutorizationService autorization)
+                                IAutorizationService autorization,
+                                IProfileService profile)
         {
-            Title = "Users SignUp";
-
             _navigationService = navigationService;
             _repository = repository;
             _autorization = autorization;
-
+            _profile = profile;
 
             Regs = new ObservableCollection<RegistrateModel>();
         }
 
         #region -Public properties-
-
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
 
         private string _login;
         public string Login
@@ -86,7 +80,7 @@ namespace ProfileBook.ViewModel
             //    {
             //        await Application.Current.MainPage.DisplayAlert("Alert", "Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Ok");
             //    }
-                 if (CheckDb(Login))//else
+                 if (CheckLogin(Login))//else
                 {
                     await Application.Current.MainPage.DisplayAlert("Alert", "Этот логин уже занят", "Ok");
                 }
@@ -99,6 +93,7 @@ namespace ProfileBook.ViewModel
                 };
                 
                 var id = await _repository.InsertAsync(reg);
+
                 reg.Id = id;
 
                 Regs.Add(reg);
@@ -124,7 +119,7 @@ namespace ProfileBook.ViewModel
             return false;
         }
 
-        private bool CheckDb(string log)
+        private bool CheckLogin(string log)
         {
             foreach (var item in Regs)
             {
@@ -163,6 +158,12 @@ namespace ProfileBook.ViewModel
                     ButtonEnabled = false;
                 }
             }
+        }
+
+        public async override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            var _reg = await _repository.GetAllAsync<RegistrateModel>();
+            Regs = new ObservableCollection<RegistrateModel>(_reg);
         }
         #endregion
     }

@@ -5,13 +5,14 @@ using ProfileBook.Services.Repository;
 using ProfileBook.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace ProfileBook.ViewModel
 {
     //TODO: Сделать адекватно тулбар view
-    //TODO: Сделать нормально выделение из списка для контекстного меню
+    //TODO: Сделать изменение языка контекстном меню
     public class MainListViewModel : BaseViewModel
     {
 
@@ -100,7 +101,25 @@ namespace ProfileBook.ViewModel
         }
         private async void LoadUsers()
         {
-            var _users = await _profile.GetProfileListAsync();
+            var _users = await _profile.GetProfileListByIdAsync();
+            Users = new ObservableCollection<UserModel>(_users);
+        }
+        private async void SortingByName()
+        {
+            var _users = await _profile.GetProfileListByIdAsync();
+            _users = _users.OrderBy(i => i.Name).ToList();
+            Users = new ObservableCollection<UserModel>(_users);
+        }
+        private async void SortingByNickName()
+        {
+            var _users = await _profile.GetProfileListByIdAsync();
+            _users = _users.OrderBy(i => i.NickName).ToList();
+            Users = new ObservableCollection<UserModel>(_users);
+        }
+        private async void SortingByDate()
+        {
+            var _users = await _profile.GetProfileListByIdAsync();
+            _users = _users.OrderBy(i => i.DateCreate).ToList();
             Users = new ObservableCollection<UserModel>(_users);
         }
 
@@ -130,6 +149,24 @@ namespace ProfileBook.ViewModel
             if (parameters.TryGetValue(nameof(UserModel), out UserModel user))
             {
                 LoadUsers();
+            }
+            if (parameters.TryGetValue("RadioCheck", out int Value))
+            {
+                switch(Value)
+                {
+                    case 1: 
+                        SortingByName();
+                        break;
+                    case 2:
+                        SortingByNickName();
+                        break;
+                    case 3:
+                        SortingByDate();
+                        break;
+                    default:
+                        break;
+                }
+                
             }
         }
         #endregion

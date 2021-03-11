@@ -1,8 +1,13 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
+using ProfileBook.Helpers;
 using ProfileBook.Models;
+using ProfileBook.Resources.Strings;
+using ProfileBook.Services.Repository;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ProfileBook.ViewModel
 {
@@ -10,6 +15,13 @@ namespace ProfileBook.ViewModel
     {
         public UserModel _user;
         public RegistrateModel _reg;
+
+        public ObservableCollection<RegistrateModel> Registrate;
+
+        public BaseViewModel()
+        {
+            Resources = new LocalizedResources(typeof(Resource), App.CurrentLanguage);
+        }
 
         #region -Public properties-
 
@@ -28,6 +40,7 @@ namespace ProfileBook.ViewModel
             set => SetProperty(ref regs, value);
         }
 
+        
         #endregion
 
         #region -Methods-
@@ -53,6 +66,19 @@ namespace ProfileBook.ViewModel
         }
 
         #endregion
+        public LocalizedResources Resources
+        {
+            get;
+            private set;
+        }
+
+        
+        public void OnPropertyChanged([CallerMemberName] string property = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
     }
 }

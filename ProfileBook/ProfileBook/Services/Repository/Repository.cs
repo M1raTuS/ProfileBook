@@ -55,17 +55,5 @@ namespace ProfileBook.Services.Repository
             return await _database.Value.Table<T>().Where(pred).ToListAsync();
         }
 
-        //public async  Task<List<T>> Get<T>(Expression<Func<T, bool>> predicate, Expression<Func<T, T>> orderBy)
-        //{
-        //    var query = _database.Value.Table<T>();
-
-        //    if (predicate != null)
-        //        query = query.Where(predicate);
-
-        //    if (orderBy != null)
-        //        query = query.OrderBy<T>(orderBy);
-
-        //    return await query.ToListAsync();
-        //}
     }
 }

@@ -1,21 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ProfileBook"
              x:Class="ProfileBook.View.MainListView"
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Main List" Priority="0"/>
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Text="LogOut" Command="{Binding LogOutCommand}" IconImageSource="ic_exit_to_app.png"/>
-        <ToolbarItem Text="Settings" Command="{Binding SettingsCommand}" IconImageSource="ic_settings.png"/>
+        <ToolbarItem Text="{Binding Resources[MainListTitle]}" Priority="0"/>
+        <ToolbarItem Text=""/>
+        <ToolbarItem Text=""/>
+        <ToolbarItem Text=""/>
+        <ToolbarItem Text="LogOut" Command="{Binding LogOutCommand}" IconImageSource="ic_exit_to_app.png" Priority="2"/>
+        <ToolbarItem Text="Settings" Command="{Binding SettingsCommand}" IconImageSource="ic_settings.png" Priority="3" />
     </ContentPage.ToolbarItems>
 
-    
-        <StackLayout>
+    <StackLayout>
         <Grid>
 
             <ListView x:Name="UsersListView"
@@ -36,26 +35,30 @@
                                           Command="{Binding Path=BindingContext.EditContext, Source={Reference UsersListView}}"
                                           CommandParameter="{Binding .}"/>
                                 <MenuItem Text="Delete"
-                                          IsDestructive="True"
                                           Command="{Binding Path=BindingContext.DeleteContext, Source={Reference UsersListView}}"
-                                          CommandParameter="{Binding .}"/>
+                                          CommandParameter="{Binding .}"
+                                          IsDestructive="True"/>
                             </ViewCell.ContextActions>
                             <ViewCell.View>
-                        <StackLayout Orientation="Horizontal" Margin="0,20">
-                            <Image Source="{Binding ProfileImage}" WidthRequest="160" HeightRequest="100" />
-                            <StackLayout>
-                                <Label Text="{Binding NickName}" FontSize="Medium" />
-                                <Label Text="{Binding Name}" FontSize="Medium" />
-                                    <Label Text="{Binding DateCreate}" FontSize="Medium" />
-                                    </StackLayout>
-                        </StackLayout>
+                                <StackLayout Orientation="Horizontal" Margin="0,20">
+                                    <Image Source="{Binding ProfileImage}" WidthRequest="160" HeightRequest="100" />
+                                        <StackLayout>
+                                            <Label Text="{Binding NickName}" FontSize="Medium" />
+                                            <Label Text="{Binding Name}" FontSize="Medium" />
+                                            <Label Text="{Binding DateCreate}" FontSize="Medium" />
+                                        </StackLayout>
+                                </StackLayout>
                             </ViewCell.View>
-                        </ViewCell>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+<!--
+            Text="{Binding Resources[EditText]}"
+            Text="{Binding Resources[DeleteText]}"
+            -->
             
-            <Label Text="No profiles added" 
+            <Label Text="{Binding Resources[NoProfilesText]}" 
                IsVisible="{Binding LabelVisible}"
                FontSize="30" 
                HorizontalOptions="CenterAndExpand"

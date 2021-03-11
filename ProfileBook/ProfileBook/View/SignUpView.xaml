@@ -2,24 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.SignUpView"
-             Title="{Binding Title}">
+             Title="{Binding Resources[SignUpTitle]}">
     
     
     <Grid>
         <StackLayout VerticalOptions="Center" Grid.Row="1"  Spacing="10" Padding="40">
-            <Entry Placeholder="Login" 
+            <Entry Placeholder="{Binding Resources[Login]}" 
                    Text="{Binding Login}"/>
-            <Entry Placeholder="Password" 
+            <Entry Placeholder="{Binding Resources[Password]}" 
                    Text="{Binding Password}" 
                    IsPassword="True" />
-            <Entry Placeholder="ConfirmPassword" 
+            <Entry Placeholder="{Binding Resources[ConfirmPassword]}" 
                    Text="{Binding ConfirmPassword}" 
                    IsPassword="True"/>
             
 
         </StackLayout>
         <StackLayout Orientation="Vertical" Margin="40" Grid.Row="3" >
-            <Button BackgroundColor="DarkOrange" Text="Sign Up" Command="{Binding AddUserCommand}" IsEnabled="{Binding ButtonEnabled}"/>
+            <Button BackgroundColor="DarkOrange" Text="{Binding Resources[SignUpText]}" Command="{Binding AddUserCommand}" IsEnabled="{Binding ButtonEnabled}"/>
         </StackLayout>
     </Grid>
 </ContentPage>

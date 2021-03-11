@@ -24,23 +24,18 @@ namespace ProfileBook.ViewModel
         public AddEditProfileViewModel(INavigationService navigationService,
                                         IRepository repository,
                                         IAutorizationService autorization,
-                                 IProfileService profile)
+                                        IProfileService profile)
         {
             _navigationService = navigationService;
             _repository = repository;
             _autorization = autorization;
             _profile = profile;
-
-
-            //_user = new UserModel();
-            //_reg = new RegistrateModel();
         }
+
+        #region -Property-
+
         public ICommand SaveCommand => new Command(Save);
-        // public ICommand DeleteContext => new Command(DeleteContextMenu);
         public ICommand ImageTappedCommand => new Command(ImageTap);
-
-
-
 
 
         private UserModel _userModel;
@@ -100,6 +95,46 @@ namespace ProfileBook.ViewModel
             }
             set => SetProperty(ref _profileImage, value);
         }
+
+        #endregion
+
+
+        #region -Overrides-
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.TryGetValue(nameof(UserModel), out UserModel user))
+            {
+                userModel = user;
+                Name = user.Name;
+                NickName = user.NickName;
+                Description = user.Description;
+                Id = user.Id;
+                ProfileImage = user.ProfileImage;
+            }
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Name) ||
+                args.PropertyName == nameof(NickName) ||
+                args.PropertyName == nameof(Description) ||
+                args.PropertyName == nameof(Id) ||
+                args.PropertyName == nameof(ProfileImage))
+            {
+                Name = Name;
+                NickName = NickName;
+                Description = Description;
+                ProfileImage = ProfileImage;
+                Id = Id;
+            }
+        }
+        #endregion
+
+        #region -Methods-
+
         private async void Save()
         {
             try
@@ -145,9 +180,7 @@ namespace ProfileBook.ViewModel
             {
                 Console.WriteLine(e);
             }
-
         }
-
 
         private bool CanSave()
         {
@@ -158,39 +191,6 @@ namespace ProfileBook.ViewModel
             return false;
         }
 
-        #region -Overrides-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-
-            if (parameters.TryGetValue(nameof(UserModel), out UserModel user))
-            {
-                userModel = user;
-                Name = user.Name;
-                NickName = user.NickName;
-                Description = user.Description;
-                Id = user.Id;
-                ProfileImage = user.ProfileImage;
-            }
-        }
-
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(Name) ||
-                args.PropertyName == nameof(NickName) ||
-                args.PropertyName == nameof(Description) ||
-                args.PropertyName == nameof(Id) ||
-                args.PropertyName == nameof(ProfileImage))
-            {
-                Name = Name;
-                NickName = NickName;
-                Description = Description;
-                ProfileImage = ProfileImage;
-                Id = Id;
-            }
-        }
-        #endregion 
         private void ImageTap()
         {
             var file = new ActionSheetConfig()
@@ -231,11 +231,11 @@ namespace ProfileBook.ViewModel
                     {
                         PhotoSize = PhotoSize.Medium,
                         SaveToAlbum = true,
-                        //SaveMetaData = true,
-                        Directory = "Photo",
-                        //MaxWidthHeight = 1500,
-                        //CompressionQuality = 75,
-                        //RotateImage = Device.RuntimePlatform == Device.Android ? true : false,
+                        SaveMetaData = true,
+                        Directory = "temp",
+                        MaxWidthHeight = 1500,
+                        CompressionQuality = 75,
+                        RotateImage = Device.RuntimePlatform == Device.Android ? true : false,
                         Name = $"{DateTime.Now}.jpg"
                     });
                     if (img != null)
@@ -250,5 +250,8 @@ namespace ProfileBook.ViewModel
                 Debug.WriteLine(e.Message);
             }
         }
+
+        #endregion
+
     }
 }

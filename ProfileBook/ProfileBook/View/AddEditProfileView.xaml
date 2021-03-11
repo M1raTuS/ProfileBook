@@ -5,7 +5,7 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add Profile" Priority="0"/>
+        <ToolbarItem Text="{Binding Resources[ProfileText]}" Priority="0"/>
         <ToolbarItem Name="" Order="Primary" Priority="0" />
         <ToolbarItem Name="" Order="Primary" Priority="0" />
         <ToolbarItem Name="" Order="Primary" Priority="0" />
@@ -17,22 +17,17 @@
 
 
     <Grid>
-        
         <StackLayout  Grid.Row="0">
-           <!-- <Image Source="{Binding ProfileImage}"
-                   Margin="50,0"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Start"/> -->
             <ffimageloading:CachedImage 
-                    Source="{Binding ProfileImage}"
+                     Source="{Binding ProfileImage}"
                      VerticalOptions="Center"
                      HorizontalOptions="Center"
                      WidthRequest="300"
                      HeightRequest="300"
-                    Aspect="AspectFit"
-                    LoadingPlaceholder= "pic_profile.png"
-                    ErrorPlaceholder= "pic_profile.png"
-                    DownsampleToViewSize = "true">
+                     Aspect="AspectFit"
+                     LoadingPlaceholder= "pic_profile.png"
+                     ErrorPlaceholder= "pic_profile.png"
+                     DownsampleToViewSize = "true">
                 <ffimageloading:CachedImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ImageTappedCommand}"/>
                 </ffimageloading:CachedImage.GestureRecognizers>
@@ -42,14 +37,14 @@
                      Margin="30,0" 
                      Grid.Row="1">
             <Entry Text="{Binding NickName}"
-                   Placeholder="NickName"/>
+                   Placeholder="{Binding Resources[NickNameText]}"/>
 
             <Entry Text="{Binding Name}"
-                   Placeholder="Name"/>
+                   Placeholder="{Binding Resources[NameText]}"/>
 
             <Editor Margin="0,50,0,0"
                     BackgroundColor="Gray"
-                    Placeholder="Description"
+                    Placeholder="{Binding Resources[DescriptionText]}"
                     HeightRequest="120"
                     MaxLength="120"
                     Text="{Binding Description}"/>

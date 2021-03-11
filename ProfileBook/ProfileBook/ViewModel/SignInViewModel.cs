@@ -1,7 +1,7 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Autorization;
-using ProfileBook.Services.Repository;
+using ProfileBook.Services.Profile;
 using ProfileBook.View;
 using System;
 using System.Collections.ObjectModel;
@@ -14,29 +14,19 @@ namespace ProfileBook.ViewModel
     public class SignInViewModel : BaseViewModel
     {
         private readonly INavigationService _navigationService;
-        private readonly IRepository _repository;
         private readonly IAutorizationService _autorization;
+        private readonly IProfileService _profileService;
 
         public SignInViewModel(INavigationService navigationService,
-                                IRepository repository,
-                                IAutorizationService autorization)
+                               IAutorizationService autorization,
+                               IProfileService profileService)
         {
-            Title = "Users SignIn";
-
             _navigationService = navigationService;
-            _repository = repository;
             _autorization = autorization;
-
+            _profileService = profileService;
         }
 
         #region -Public properties-
-
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
 
         private string _login;
         public string Login
@@ -68,8 +58,9 @@ namespace ProfileBook.ViewModel
 
         private async void SignInUser()
         {
-            //TODO: Не заходит сразу после регистрации. Пофиксить!!! 
-            var res = _autorization.SignIn(Login, Password);
+            //TODO: Не заходит сразу после регистрации. Пофиксить!!!
+            
+            var res = CheckDb(Login, Password);
 
             if (res)
             {
@@ -102,6 +93,8 @@ namespace ProfileBook.ViewModel
             {
                 if (item.Login == log.ToString() && item.Password == pas.ToString())
                 {
+                    _autorization.GetCurrentId = item.Id;
+                    _autorization.IsAutorized = true;
                     return true;
                 }
             }
@@ -110,7 +103,7 @@ namespace ProfileBook.ViewModel
 
         private async void Load()
         {
-            var _reg = await _repository.GetAllAsync<RegistrateModel>();
+            var _reg = await _profileService.GetAllProfileListAsync();
             Regs = new ObservableCollection<RegistrateModel>(_reg);
         }
 
@@ -135,7 +128,6 @@ namespace ProfileBook.ViewModel
                 }
             }
         }
-
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {

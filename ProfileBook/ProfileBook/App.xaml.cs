@@ -1,4 +1,6 @@
-﻿using Prism.Ioc;
+﻿using Acr.UserDialogs;
+using Plugin.Media;
+using Prism.Ioc;
 using Prism.Unity;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Profile;
@@ -12,15 +14,13 @@ namespace ProfileBook
 {
     public partial class App : PrismApplication
     {
-        private readonly IAutorizationService _autorization;
+        public static string CurrentLanguage = "EN";
+
         public App()
         {
 
         }
-        public App(IAutorizationService autorization)
-        {
-            _autorization = autorization;
-        }
+
         #region ---Ovverides---
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
@@ -29,6 +29,8 @@ namespace ProfileBook
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
             containerRegistry.RegisterInstance<IAutorizationService>(Container.Resolve<AutorizationService>());
             containerRegistry.RegisterInstance<IProfileService>(Container.Resolve<ProfileService>());
+
+            containerRegistry.RegisterInstance(CrossMedia.Current.Initialize());
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -44,18 +46,22 @@ namespace ProfileBook
         {
             InitializeComponent();
 
-            //if (_autorization.IsAutorized)
-            //{
-            //    NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
-            //}
-            //else 
-            //{ 
-                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}"); 
-            //}
-            
+            AutorizationService autorization = new AutorizationService();
+            if (autorization.IsAutorized)
+            {
+                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
+            }
+            else
+            {
+                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
+            }
         }
+
+        
+                  
         protected override void OnStart()
         {
+            
         }
 
         protected override void OnSleep()
@@ -64,6 +70,7 @@ namespace ProfileBook
 
         protected override void OnResume()
         {
+           
         }
 
         #endregion

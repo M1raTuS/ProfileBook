@@ -2,27 +2,27 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.SignInView"
-             Title="{Binding Title}">
+             Title="{Binding Resources[SignInTitle]}">
 
            
     <Grid>
         <StackLayout VerticalOptions="Center" Grid.Row="1" Spacing="10" Margin="40">
             
             <Entry Text="{Binding Login}"
-               Placeholder="Login"/>
+               Placeholder="{Binding Resources[Login]}"/>
             
             <Entry Text="{Binding Password}"
                IsPassword="True"
-               Placeholder="Password"/>
+               Placeholder="{Binding Resources[Password]}"/>
             
         </StackLayout>
         <StackLayout VerticalOptions="Center" Margin="40" Grid.Row="3"  Spacing="10">
-            <Button  Text="Sign In"  BackgroundColor="DarkOrange" Command="{Binding SignInCommand}" IsEnabled="{Binding ButtonEnabled}" />
+            <Button  Text="{Binding Resources[SignInText]}"  BackgroundColor="DarkOrange" Command="{Binding SignInCommand}" IsEnabled="{Binding ButtonEnabled}" />
             <Label HorizontalOptions = "Center"
                    VerticalOptions="CenterAndExpand">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text = "SIGN UP"
+                        <Span Text = "{Binding Resources[SignUpText]}"
                               TextColor = "Blue"
                               TextDecorations = "Underline">
                             <Span.GestureRecognizers>

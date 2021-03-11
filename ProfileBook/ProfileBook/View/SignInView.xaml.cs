@@ -8,7 +8,7 @@ namespace ProfileBook.View
     {
         public SignInView()
         {
-                InitializeComponent();
+            InitializeComponent();
         }
     }
 }
