@@ -16,7 +16,7 @@
 
 
 
-    <Grid>
+    <Grid BackgroundColor="{DynamicResource BackgroundColor}">
         <StackLayout  Grid.Row="0">
             <ffimageloading:CachedImage 
                      Source="{Binding ProfileImage}"
@@ -37,10 +37,16 @@
                      Margin="30,0" 
                      Grid.Row="1">
             <Entry Text="{Binding NickName}"
-                   Placeholder="{Binding Resources[NickNameText]}"/>
+                   Placeholder="{Binding Resources[NickNameText]}"
+                   PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                   TextColor="{DynamicResource TextPrimaryColor}"
+                   BackgroundColor="{DynamicResource FrameColor}"/>
 
             <Entry Text="{Binding Name}"
-                   Placeholder="{Binding Resources[NameText]}"/>
+                   Placeholder="{Binding Resources[NameText]}"
+                   PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                   TextColor="{DynamicResource TextPrimaryColor}"
+                   BackgroundColor="{DynamicResource FrameColor}"/>
 
             <Editor Margin="0,50,0,0"
                     BackgroundColor="Gray"

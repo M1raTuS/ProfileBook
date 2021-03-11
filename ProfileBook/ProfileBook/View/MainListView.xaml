@@ -15,7 +15,7 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout>
-        <Grid>
+        <Grid BackgroundColor="{DynamicResource BackgroundColor}">
 
             <ListView x:Name="UsersListView"
                       ItemsSource="{Binding Users}"
@@ -25,7 +25,7 @@
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped"
                                               Command="{Binding SelectedCommand}"
-                                              EventArgsParameterPath="Item"/>
+                                              EventArgsParameterPath="Item" />
                 </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -43,9 +43,15 @@
                                 <StackLayout Orientation="Horizontal" Margin="0,20">
                                     <Image Source="{Binding ProfileImage}" WidthRequest="160" HeightRequest="100" />
                                         <StackLayout>
-                                            <Label Text="{Binding NickName}" FontSize="Medium" />
-                                            <Label Text="{Binding Name}" FontSize="Medium" />
-                                            <Label Text="{Binding DateCreate}" FontSize="Medium" />
+                                            <Label Text="{Binding NickName}" 
+                                                   FontSize="Medium" 
+                                                   TextColor="{DynamicResource TextPrimaryColor}"/>
+                                            <Label Text="{Binding Name}" 
+                                                   FontSize="Medium" 
+                                                   TextColor="{DynamicResource TextPrimaryColor}"/>
+                                            <Label Text="{Binding DateCreate}" 
+                                                   FontSize="Medium" 
+                                                   TextColor="{DynamicResource TextPrimaryColor}"/>
                                         </StackLayout>
                                 </StackLayout>
                             </ViewCell.View>
@@ -72,7 +78,7 @@
                 BorderWidth="10"
                 Padding="0 , 32"
                 Margin="30,30"
-                BorderColor="Black"
+                BorderColor="{DynamicResource FloatButtonColor}"
                 BackgroundColor="Blue"
                 ImageSource="ic_add.png"/>
         </Grid>

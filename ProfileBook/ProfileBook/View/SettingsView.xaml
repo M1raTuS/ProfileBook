@@ -5,10 +5,12 @@
              Title="{Binding Resources[Settings]}">
 
 
-    <Grid>
+    <Grid BackgroundColor="{DynamicResource BackgroundColor}">
         <Grid  HorizontalOptions="Center"
             VerticalOptions="StartAndExpand">
+            
             <Label Text="{Binding Resources[SelectSort]}"
+                   TextColor="{DynamicResource TextPrimaryColor}"
                    Grid.Row="2"
                    FontSize="Large"/>
         </Grid>
@@ -23,9 +25,11 @@
                      GroupName="Sorting"
                      HorizontalOptions="End"
                      VerticalOptions="Center"
-                     IsChecked="{Binding RadioCheck1}"/>
+                     IsChecked="{Binding RadioCheck1}"
+                     BorderColor="{DynamicResource BackgroundColor}"/>
             
             <Label Text="{Binding Resources[SortName]}"
+                   TextColor="{DynamicResource TextPrimaryColor}"
                    Grid.Row="0"
                    Grid.Column="1"
                    Grid.ColumnSpan="2"
@@ -36,22 +40,26 @@
                      GroupName="Sorting"
                      HorizontalOptions="End"
                      VerticalOptions="Center"
-                     IsChecked="{Binding RadioCheck2}"/>
+                     IsChecked="{Binding RadioCheck2}"
+                     BorderColor="{DynamicResource BackgroundColor}"/>
             
             <Label Text="{Binding Resources[SortNickName]}"
+                   TextColor="{DynamicResource TextPrimaryColor}"
                    Grid.Row="1"
                    Grid.Column="1"
                    Grid.ColumnSpan="2"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"/>
             
-            <RadioButton Grid.Row="2"
-                         GroupName="Sorting"
-                         HorizontalOptions="End"
-                         VerticalOptions="Center"
-                         IsChecked="{Binding RadioCheck3}"/>
+        <RadioButton Grid.Row="2"
+                     GroupName="Sorting"
+                     HorizontalOptions="End"
+                     VerticalOptions="Center"
+                     IsChecked="{Binding RadioCheck3}"
+                     BorderColor="{DynamicResource BackgroundColor}"/>
             
             <Label Text="{Binding Resources[SortDate]}"
+                   TextColor="{DynamicResource TextPrimaryColor}"
                    Grid.Row="2"
                    Grid.Column="1"
                    Grid.ColumnSpan="2"
@@ -61,6 +69,7 @@
 
 
             <Label Text="{Binding Resources[Theme]}"
+                   TextColor="{DynamicResource TextPrimaryColor}"
                    Grid.Row="4"
                    Grid.Column="0"
                    Grid.ColumnSpan="2"
@@ -71,10 +80,13 @@
             <CheckBox Grid.Row="4"
                       Grid.Column="1"
                       HorizontalOptions="End"
-                      VerticalOptions="Center"/>
+                      VerticalOptions="Center"
+                      IsChecked="{Binding ThemeCheck}"
+                      IsEnabled="True"/>
 
        
         <Label Text="{Binding Resources[Language]}"
+               TextColor="{DynamicResource TextPrimaryColor}"
                Grid.Row="6"
                Grid.Column="1"
                Grid.ColumnSpan="2"
@@ -84,9 +96,11 @@
         
             <Picker Grid.Row="7"
                     Grid.Column="1"
+                    TextColor="{DynamicResource TextPrimaryColor}"
                     ItemsSource="{Binding Languages}"
                     SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
-                    SelectedIndex="{Binding SelectedIndex}"/>
+                    SelectedIndex="{Binding SelectedIndex}"
+                    TitleColor="{DynamicResource TextPrimaryColor}"/>
         </Grid>
     </Grid>
     

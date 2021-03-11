@@ -1,8 +1,11 @@
 ﻿using Prism.Navigation;
+using ProfileBook.Enum;
 using ProfileBook.Helpers;
+using ProfileBook.Interface;
 using ProfileBook.Models;
 using ProfileBook.Services.Profile;
 using ProfileBook.Services.Settings;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,7 +18,10 @@ namespace ProfileBook.ViewModel
     {
         private readonly ISettingsManager _settings;
         private readonly IProfileService _profile;
-
+        public SettingsViewModel()
+        {
+            _SelectedLanguage = App.CurrentLanguage;
+        }
         public SettingsViewModel(IProfileService profile)
         {
             _SelectedLanguage = App.CurrentLanguage;
@@ -29,6 +35,7 @@ namespace ProfileBook.ViewModel
         //}
 
         //_settings.
+        #region -Sort-
 
         private int _value;
 
@@ -76,13 +83,17 @@ namespace ProfileBook.ViewModel
                 _radioCheck = value;
             }
         }
-        
+
+        #endregion
+
+        #region -Language-
+
         public List<string> Languages { get; set; } = new List<string>()
         {
            "EN",
            "RU"
         };
-        
+
         private int _selectedIndex;
 
         public int SelectedIndex
@@ -93,7 +104,7 @@ namespace ProfileBook.ViewModel
                 //{
                 //    return _selectedIndex;
                 //}
-               return _selectedIndex = Languages.IndexOf(SelectedLanguage);
+                return _selectedIndex = Languages.IndexOf(SelectedLanguage);
                 //return _settings.SelectedLanguage;
             }
             set
@@ -133,9 +144,49 @@ namespace ProfileBook.ViewModel
             MessagingCenter.Send<object, CultureChangedMessage>(this,
                     string.Empty, new CultureChangedMessage(SelectedLanguage));
         }
+        #endregion
+
+
+
+
+        private bool _themeCheck;
+
+        public bool ThemeCheck
+        {
+            get
+            {
+                if (App.AppTheme == Theme.Dark)
+                {
+                    return true;
+                }
+               
+                return _themeCheck;
+            }
+            set
+            {
+                _themeCheck = value;
+                SetTheme(value);
+            }
+        }
+        void SetTheme(bool status)
+        {
+            Theme themeRequested;
+            if (status)
+            {
+                themeRequested = Theme.Dark;
+            }
+            else
+            {
+                themeRequested = Theme.Light;
+            }
+
+            DependencyService.Get<IAppTheme>().SetAppTheme(themeRequested);
+        }
+
+        
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
-            parameters.Add(nameof(RadioCheck),Value);
+            parameters.Add(nameof(RadioCheck), Value);
         }
     }
 }

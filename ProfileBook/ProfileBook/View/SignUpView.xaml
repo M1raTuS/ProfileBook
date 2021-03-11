@@ -3,18 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.SignUpView"
              Title="{Binding Resources[SignUpTitle]}">
-    
-    
-    <Grid>
+
+
+    <Grid BackgroundColor="{DynamicResource BackgroundColor}">
         <StackLayout VerticalOptions="Center" Grid.Row="1"  Spacing="10" Padding="40">
             <Entry Placeholder="{Binding Resources[Login]}" 
-                   Text="{Binding Login}"/>
+                   Text="{Binding Login}"
+                   PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                   BackgroundColor="{DynamicResource FrameColor}"
+                   TextColor="{DynamicResource TextPrimaryColor}"/>
+            
             <Entry Placeholder="{Binding Resources[Password]}" 
                    Text="{Binding Password}" 
-                   IsPassword="True" />
+                   IsPassword="True" 
+                   PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                   BackgroundColor="{DynamicResource FrameColor}"
+                   TextColor="{DynamicResource TextPrimaryColor}"/>
+            
             <Entry Placeholder="{Binding Resources[ConfirmPassword]}" 
                    Text="{Binding ConfirmPassword}" 
-                   IsPassword="True"/>
+                   IsPassword="True"
+                   PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                   BackgroundColor="{DynamicResource FrameColor}"
+                   TextColor="{DynamicResource TextPrimaryColor}"/>
             
 
         </StackLayout>

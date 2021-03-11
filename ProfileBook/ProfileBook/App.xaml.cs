@@ -2,6 +2,7 @@
 using Plugin.Media;
 using Prism.Ioc;
 using Prism.Unity;
+using ProfileBook.Enum;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Profile;
 using ProfileBook.Services.Repository;
@@ -15,7 +16,7 @@ namespace ProfileBook
     public partial class App : PrismApplication
     {
         public static string CurrentLanguage = "EN";
-
+        public static Theme AppTheme { get; set; }
         public App()
         {
 
@@ -74,6 +75,6 @@ namespace ProfileBook
         }
 
         #endregion
-
+        
     }
 }

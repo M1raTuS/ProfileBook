@@ -4,16 +4,22 @@
              x:Class="ProfileBook.View.SignInView"
              Title="{Binding Resources[SignInTitle]}">
 
-           
-    <Grid>
+
+    <Grid BackgroundColor="{DynamicResource BackgroundColor}">
         <StackLayout VerticalOptions="Center" Grid.Row="1" Spacing="10" Margin="40">
             
             <Entry Text="{Binding Login}"
-               Placeholder="{Binding Resources[Login]}"/>
+                   Placeholder="{Binding Resources[Login]}"
+                   PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                   BackgroundColor="{DynamicResource FrameColor}"
+                   TextColor="{DynamicResource TextPrimaryColor}"/>
             
             <Entry Text="{Binding Password}"
-               IsPassword="True"
-               Placeholder="{Binding Resources[Password]}"/>
+                   IsPassword="True"
+                   Placeholder="{Binding Resources[Password]}"
+                   PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                   BackgroundColor="{DynamicResource FrameColor}"
+                   TextColor="{DynamicResource TextPrimaryColor}"/>
             
         </StackLayout>
         <StackLayout VerticalOptions="Center" Margin="40" Grid.Row="3"  Spacing="10">
