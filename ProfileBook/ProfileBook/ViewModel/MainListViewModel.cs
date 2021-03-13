@@ -1,7 +1,6 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Profile;
-using ProfileBook.Services.Repository;
 using ProfileBook.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,15 +15,12 @@ namespace ProfileBook.ViewModel
     {
 
         private readonly INavigationService _navigationService;
-        private readonly IRepository _repository;
         private readonly IProfileService _profile;
 
         public MainListViewModel(INavigationService navigationService,
-                                 IRepository repository,
                                  IProfileService profile)
         {
             _navigationService = navigationService;
-            _repository = repository;
             _profile = profile;
 
             LoadUsers();
@@ -99,7 +95,6 @@ namespace ProfileBook.ViewModel
 
                 LoadUsers();
             }
-
         }
         private async void LoadUsers()
         {
@@ -168,7 +163,6 @@ namespace ProfileBook.ViewModel
                     default:
                         break;
                 }
-
             }
         }
 

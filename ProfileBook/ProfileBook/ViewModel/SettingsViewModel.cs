@@ -2,39 +2,23 @@
 using ProfileBook.Enum;
 using ProfileBook.Helpers;
 using ProfileBook.Interface;
-using ProfileBook.Models;
-using ProfileBook.Services.Profile;
 using ProfileBook.Services.Settings;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace ProfileBook.ViewModel
 {
     public class SettingsViewModel : BaseViewModel
     {
         private readonly ISettingsManager _settings;
-        private readonly IProfileService _profile;
-        public SettingsViewModel()
+        public SettingsViewModel(ISettingsManager settings)
         {
-            _SelectedLanguage = App.CurrentLanguage;
+            _settings = settings;
+            SelectedLanguage = _settings.SelectedLanguage;
         }
-        public SettingsViewModel(IProfileService profile)
-        {
-            _SelectedLanguage = App.CurrentLanguage;
-            _profile = profile;
-        }
-        //public SettingsViewModel(ISettingsManager settings)
-        //{
-        //    //_SelectedLanguage = App.CurrentLanguage;
-        //    _settings = settings;
-        //    _settings.SelectedLanguage = App.CurrentLanguage;
-        //}
 
-        //_settings.
+
         #region -Sort-
 
         private int _value;
@@ -100,12 +84,7 @@ namespace ProfileBook.ViewModel
         {
             get
             {
-                //if (_selectedIndex != null)
-                //{
-                //    return _selectedIndex;
-                //}
                 return _selectedIndex = Languages.IndexOf(SelectedLanguage);
-                //return _settings.SelectedLanguage;
             }
             set
             {
@@ -113,33 +92,30 @@ namespace ProfileBook.ViewModel
                 {
                     _selectedIndex = value;
                 }
-                //_settings.SelectedLanguage;
             }
         }
 
-        private string _SelectedLanguage;
+        private string _selectedLanguage;
 
         public string SelectedLanguage
         {
             get
             {
-                return _SelectedLanguage;
+                return _selectedLanguage;
             }
             set
             {
                 if (value != null)
                 {
-                    _SelectedLanguage = value;
+                    SetProperty(ref _selectedLanguage, value);
                     SetLanguage();
+
                 }
             }
         }
 
         private void SetLanguage()
         {
-            // App.CurrentLanguage = _settings.SelectedLanguage;
-            // MessagingCenter.Send<object, CultureChangedMessage>(this,
-            //         string.Empty, new CultureChangedMessage(_settings.SelectedLanguage));
             App.CurrentLanguage = SelectedLanguage;
             MessagingCenter.Send<object, CultureChangedMessage>(this,
                     string.Empty, new CultureChangedMessage(SelectedLanguage));
@@ -163,13 +139,14 @@ namespace ProfileBook.ViewModel
             }
             set
             {
-                _themeCheck = value;
                 SetTheme(value);
+                SetProperty(ref _themeCheck, value);
             }
         }
+        Theme themeRequested;
         void SetTheme(bool status)
         {
-            Theme themeRequested;
+
             if (status)
             {
                 themeRequested = Theme.Dark;
@@ -192,6 +169,13 @@ namespace ProfileBook.ViewModel
             parameters.Add(nameof(RadioCheck), Value);
         }
 
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(SelectedLanguage))
+            {
+                _settings.SelectedLanguage = SelectedLanguage;
+            }
+        }
         #endregion
 
 

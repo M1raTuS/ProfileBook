@@ -173,7 +173,7 @@ namespace ProfileBook.ViewModel
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Заполните поля NickName и Name", "Ok");
+                    UserDialogs.Instance.Alert("Заполните поля NickName и Name", "Alert", "Ok"); 
                 }
             }
             catch (Exception e)

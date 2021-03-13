@@ -1,4 +1,5 @@
-﻿using Prism.Navigation;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Autentification;
 using ProfileBook.Services.Autorization;
@@ -71,7 +72,7 @@ namespace ProfileBook.ViewModel
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid login or password!", "Ok");
+                UserDialogs.Instance.Alert("Invalid login or password!", "Alert", "Ok");
                 Password = "";
             }
         }

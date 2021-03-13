@@ -18,7 +18,8 @@
                       ItemsSource="{Binding Users}"
                       SelectedItem="{Binding SelectedItem}"
                       IsEnabled="{Binding ListEnabled}"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      SelectionMode="None">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped"
                                               Command="{Binding SelectedCommand}"

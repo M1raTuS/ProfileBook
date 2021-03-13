@@ -3,6 +3,7 @@ using Prism.Navigation;
 using ProfileBook.Helpers;
 using ProfileBook.Models;
 using ProfileBook.Resources.Strings;
+using ProfileBook.Services.Settings;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,7 +22,6 @@ namespace ProfileBook.ViewModel
         {
             Resources = new LocalizedResources(typeof(Resource), App.CurrentLanguage);
         }
-
         #region -Public properties-
 
 

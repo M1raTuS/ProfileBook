@@ -11,6 +11,7 @@ namespace ProfileBook.Services.Autentification
         private readonly IProfileService _profile;
         private readonly IAutorizationService _autorization;
 
+
         public AutentificationService(IProfileService profile,
                                       IAutorizationService autorization)
         {

@@ -1,4 +1,5 @@
-﻿using Prism.Navigation;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Autentification;
 using ProfileBook.Services.Autorization;
@@ -65,12 +66,12 @@ namespace ProfileBook.ViewModel
             set => SetProperty(ref _buttonEnabled, value);
         }
 
-        public ICommand AddUserCommand => new Command(AddUser);
+        public ICommand AddUserCommand => new Command(AddUserAsync);
 
         #endregion
 
         #region -Methods-
-        private async void AddUser(object obj)
+        private async void AddUserAsync(object obj)
         {
             if (Password == ConfirmPassword)
             {
@@ -79,15 +80,15 @@ namespace ProfileBook.ViewModel
 
                 if (!LoginValidation)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Ok");
+                    UserDialogs.Instance.Alert("Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Alert", "Ok");
                 }
                 else if (!PasswordValidation)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Ok");
+                    UserDialogs.Instance.Alert("Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Alert", "Ok");
                 }
                 else if (_autentification.CheckLogin(Login))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Этот логин уже занят", "Ok");
+                    UserDialogs.Instance.Alert("Этот логин уже занят", "Alert", "Ok");
                 }
                 else
                 {
@@ -111,7 +112,7 @@ namespace ProfileBook.ViewModel
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Значения в полях Password и ConfirmPassword должны совпадать.", "Ok");
+                UserDialogs.Instance.Alert("Значения в полях Password и ConfirmPassword должны совпадать.", "Alert", "Ok");
             }
         }
 

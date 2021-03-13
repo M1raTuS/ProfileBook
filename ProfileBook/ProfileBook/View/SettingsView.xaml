@@ -9,7 +9,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
@@ -19,7 +21,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -29,16 +31,17 @@
 
         <Label Grid.Row="0"
                Grid.Column="1"
-               Grid.ColumnSpan="3"
+               Grid.ColumnSpan="5"
                HorizontalOptions="Center"
                Text="{Binding Resources[SelectSort]}"
                TextColor="{DynamicResource TextPrimaryColor}"
                FontSize="Large"/>
 
         <RadioButton Grid.Row="1"
-                     Grid.Column="1"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3"
                      GroupName="Sorting"
-                     HorizontalOptions="End"
+                     HorizontalOptions="Center"
                      VerticalOptions="Center"
                      IsChecked="{Binding RadioCheck1}"
                      BorderColor="{DynamicResource BackgroundColor}"/>
@@ -47,7 +50,7 @@
                TextColor="{DynamicResource TextPrimaryColor}"
                Grid.Row="1"
                Grid.Column="2"
-               Grid.ColumnSpan="3"
+               Grid.ColumnSpan="4"
                HorizontalOptions="Start"
                VerticalOptions="Center"/>
 
@@ -79,7 +82,7 @@
                TextColor="{DynamicResource TextPrimaryColor}"
                Grid.Row="3"
                Grid.Column="2"
-               Grid.ColumnSpan="3"
+               Grid.ColumnSpan="4"
                HorizontalOptions="Start"
                VerticalOptions="Center"/>
 
@@ -89,15 +92,15 @@
                TextColor="{DynamicResource TextPrimaryColor}"
                Grid.Row="5"
                Grid.Column="1"
-               Grid.ColumnSpan="2"
+               Grid.ColumnSpan="3"
                FontSize="Large"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
 
         <CheckBox Grid.Row="5"
-                  Grid.Column="2"
-                  HorizontalOptions="End"
-                  VerticalOptions="Center"
+                  Grid.Column="4"
+                  HorizontalOptions="Center"
+                  VerticalOptions="CenterAndExpand"
                   IsChecked="{Binding ThemeCheck}"
                   IsEnabled="True"/>
 
@@ -105,14 +108,14 @@
         <Label Text="{Binding Resources[Language]}"
                TextColor="{DynamicResource TextPrimaryColor}"
                Grid.Row="7"
-               Grid.Column="1"
+               Grid.Column="2"
                Grid.ColumnSpan="3"
                FontSize="Large"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
 
         <Picker Grid.Row="8"
-                Grid.Column="2"
+                Grid.Column="3"
                 TextColor="{DynamicResource TextPrimaryColor}"
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
