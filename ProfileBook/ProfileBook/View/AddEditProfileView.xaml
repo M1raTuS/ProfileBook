@@ -6,10 +6,6 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="{Binding Resources[ProfileText]}" Priority="0"/>
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
         <ToolbarItem Text="" Command="{Binding SaveCommand}" IconImageSource="ic_save.png" Priority="1"/>
     </ContentPage.ToolbarItems>
 
@@ -17,45 +13,70 @@
 
 
     <Grid BackgroundColor="{DynamicResource BackgroundColor}">
-        <StackLayout  Grid.Row="0">
-            <ffimageloading:CachedImage 
-                     Source="{Binding ProfileImage}"
-                     VerticalOptions="Center"
-                     HorizontalOptions="Center"
-                     WidthRequest="300"
-                     HeightRequest="300"
-                     Aspect="AspectFit"
-                     LoadingPlaceholder= "pic_profile.png"
-                     ErrorPlaceholder= "pic_profile.png"
-                     DownsampleToViewSize = "true">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ffimageloading:CachedImage 
+                   Grid.Row="0"
+                   Grid.RowSpan="3"
+                   Grid.Column="1"
+                   Source="{Binding ProfileImage}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   WidthRequest="300"
+                   HeightRequest="300"
+                   Aspect="AspectFit"
+                   LoadingPlaceholder= "pic_profile.png"
+                   ErrorPlaceholder= "pic_profile.png"
+                   DownsampleToViewSize = "true">
                 <ffimageloading:CachedImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ImageTappedCommand}"/>
                 </ffimageloading:CachedImage.GestureRecognizers>
             </ffimageloading:CachedImage>
-        </StackLayout>
-        <StackLayout VerticalOptions="StartAndExpand" 
-                     Margin="30,0" 
-                     Grid.Row="1">
-            <Entry Text="{Binding NickName}"
+
+            <Entry Grid.Row="4"
+                   Grid.Column="1"
+                   Text="{Binding NickName}"
                    Placeholder="{Binding Resources[NickNameText]}"
                    PlaceholderColor="{DynamicResource TextSecondaryColor}"
                    TextColor="{DynamicResource TextPrimaryColor}"
                    BackgroundColor="{DynamicResource FrameColor}"/>
 
-            <Entry Text="{Binding Name}"
+            <Entry Grid.Row="6"
+                   Grid.Column="1"
+                   Text="{Binding Name}"
                    Placeholder="{Binding Resources[NameText]}"
                    PlaceholderColor="{DynamicResource TextSecondaryColor}"
                    TextColor="{DynamicResource TextPrimaryColor}"
                    BackgroundColor="{DynamicResource FrameColor}"/>
 
-            <Editor Margin="0,50,0,0"
-                    BackgroundColor="Gray"
-                    Placeholder="{Binding Resources[DescriptionText]}"
-                    HeightRequest="120"
-                    MaxLength="120"
-                    Text="{Binding Description}"/>
-        </StackLayout>
+        <Editor Grid.Row="8" 
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                BackgroundColor="Gray"
+                Placeholder="{Binding Resources[DescriptionText]}"
+                HeightRequest="120"
+                MaxLength="120"
+                Text="{Binding Description}"/>
     </Grid>
     
     
 </ContentPage>
+    

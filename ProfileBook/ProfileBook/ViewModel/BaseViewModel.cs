@@ -3,7 +3,6 @@ using Prism.Navigation;
 using ProfileBook.Helpers;
 using ProfileBook.Models;
 using ProfileBook.Resources.Strings;
-using ProfileBook.Services.Repository;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -40,7 +39,7 @@ namespace ProfileBook.ViewModel
             set => SetProperty(ref regs, value);
         }
 
-        
+
         #endregion
 
         #region -Methods-
@@ -72,7 +71,7 @@ namespace ProfileBook.ViewModel
             private set;
         }
 
-        
+
         public void OnPropertyChanged([CallerMemberName] string property = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));

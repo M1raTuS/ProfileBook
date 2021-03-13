@@ -146,8 +146,7 @@ namespace ProfileBook.ViewModel
         }
         #endregion
 
-
-
+        #region -Themechoise-
 
         private bool _themeCheck;
 
@@ -159,7 +158,7 @@ namespace ProfileBook.ViewModel
                 {
                     return true;
                 }
-               
+
                 return _themeCheck;
             }
             set
@@ -183,10 +182,19 @@ namespace ProfileBook.ViewModel
             DependencyService.Get<IAppTheme>().SetAppTheme(themeRequested);
         }
 
-        
+        #endregion
+
+
+        #region -override-
+
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             parameters.Add(nameof(RadioCheck), Value);
         }
+
+        #endregion
+
+
+
     }
 }

@@ -4,10 +4,7 @@
     {
         bool IsAutorized { get; set; }
         void Unauthorize();
-        bool SignIn(string Login, string Password);
         int GetCurrentId { get; set; }
         int GetCurrentUserId();
-
-
     }
 }

@@ -10,7 +10,7 @@
     <Color x:Key="FloatButtonColor">#FFFFFFFF</Color>
 
     <Style x:Key="Title" TargetType="Label">
-        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}"/> 
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}"/>
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="FontSize" Value="Large"/>
     </Style>

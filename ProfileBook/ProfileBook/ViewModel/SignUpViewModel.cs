@@ -1,8 +1,10 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autentification;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Profile;
 using ProfileBook.Services.Repository;
+using ProfileBook.Validation;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,16 +19,19 @@ namespace ProfileBook.ViewModel
         private readonly IRepository _repository;
         private readonly IAutorizationService _autorization;
         private readonly IProfileService _profile;
+        private readonly IAutentificationService _autentification;
 
         public SignUpViewModel(INavigationService navigationService,
                                 IRepository repository,
                                 IAutorizationService autorization,
-                                IProfileService profile)
+                                IProfileService profile,
+                                IAutentificationService autentification)
         {
             _navigationService = navigationService;
             _repository = repository;
             _autorization = autorization;
             _profile = profile;
+            _autentification = autentification;
 
             Regs = new ObservableCollection<RegistrateModel>();
         }
@@ -67,47 +72,47 @@ namespace ProfileBook.ViewModel
         #region -Methods-
         private async void AddUser(object obj)
         {
-            //if (Password == ConfirmPassword)
-            //{
-            //    var LoginValidation = Validator.StringValid(Login, Validator.Login);
-            //    var PasswordValidation = Validator.StringValid(Password, Validator.Password);
+            if (Password == ConfirmPassword)
+            {
+                var LoginValidation = Validator.StringValid(Login, Validator.Login);
+                var PasswordValidation = Validator.StringValid(Password, Validator.Password);
 
-            //    if (!LoginValidation)
-            //    {
-            //        await Application.Current.MainPage.DisplayAlert("Alert", "Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Ok");
-            //    }
-            //    else if (!PasswordValidation)
-            //    {
-            //        await Application.Current.MainPage.DisplayAlert("Alert", "Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Ok");
-            //    }
-                 if (CheckLogin(Login))//else
+                if (!LoginValidation)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Ok");
+                }
+                else if (!PasswordValidation)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Ok");
+                }
+                else if (_autentification.CheckLogin(Login))
                 {
                     await Application.Current.MainPage.DisplayAlert("Alert", "Этот логин уже занят", "Ok");
                 }
                 else
-            {
-                var reg = new RegistrateModel()
                 {
-                    Login = Login,
-                    Password = Password
-                };
-                
-                var id = await _repository.InsertAsync(reg);
+                    var reg = new RegistrateModel()
+                    {
+                        Login = Login,
+                        Password = Password
+                    };
 
-                reg.Id = id;
+                    var id = await _repository.InsertAsync(reg);
 
-                Regs.Add(reg);
+                    reg.Id = id;
 
-                var nav = new NavigationParameters();
-                nav.Add(nameof(RegistrateModel), (RegistrateModel)reg);
+                    Regs.Add(reg);
 
-                 await _navigationService.GoBackAsync(nav, false, true);
+                    var nav = new NavigationParameters();
+                    nav.Add(nameof(RegistrateModel), (RegistrateModel)reg);
+
+                    await _navigationService.GoBackAsync(nav, false, true);
+                }
             }
-            //}
-            //else
-            //{
-            //    await Application.Current.MainPage.DisplayAlert("Alert", "Значения в полях Password и ConfirmPassword должны совпадать.", "Ok");
-            //}
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Значения в полях Password и ConfirmPassword должны совпадать.", "Ok");
+            }
         }
 
         private bool CanSignIn()
@@ -116,19 +121,6 @@ namespace ProfileBook.ViewModel
             {
                 return true;
             }
-            return false;
-        }
-
-        private bool CheckLogin(string log)
-        {
-            foreach (var item in Regs)
-            {
-                if (item.Login == log.ToString())
-                {
-                    return true;
-                }
-            }
-
             return false;
         }
 
@@ -165,6 +157,7 @@ namespace ProfileBook.ViewModel
             var _reg = await _repository.GetAllAsync<RegistrateModel>();
             Regs = new ObservableCollection<RegistrateModel>(_reg);
         }
+
         #endregion
     }
 }

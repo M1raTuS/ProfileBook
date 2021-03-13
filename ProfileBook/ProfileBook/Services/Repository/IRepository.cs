@@ -14,7 +14,5 @@ namespace ProfileBook.Services.Repository
         Task<List<T>> GetAllAsync<T>() where T : IEntityBase, new();
         Task<T> GetOneAsync<T>(int Id) where T : IEntityBase, new();
         Task<List<T>> FindAsync<T>(Expression<Func<T, bool>> pred = null) where T : class, IEntityBase, new();
-
-
     }
 }

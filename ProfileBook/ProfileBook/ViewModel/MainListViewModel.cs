@@ -11,7 +11,6 @@ using Xamarin.Forms;
 
 namespace ProfileBook.ViewModel
 {
-    //TODO: Сделать адекватно тулбар view
     //TODO: Сделать изменение языка контекстном меню
     public class MainListViewModel : BaseViewModel
     {
@@ -59,7 +58,9 @@ namespace ProfileBook.ViewModel
         public ICommand EditContext => new Command(EditContextMenu);
         public ICommand DeleteContext => new Command(DeleteContextMenu);
         public ICommand SettingsCommand => new Command(SettingsMenu);
+
         #endregion
+
         #region -Methods-
 
         private async void LogOut()
@@ -79,7 +80,8 @@ namespace ProfileBook.ViewModel
             var nav = new NavigationParameters();
             nav.Add(nameof(UserModel), (UserModel)user);
 
-            // await _navigationService.NavigateAsync(nameof(ProfileImageView), nav, false, true);
+
+            await _navigationService.NavigateAsync(nameof(ProfileImageView), nav, true, false);
         }
         private async void EditContextMenu(object obj)
         {
@@ -152,9 +154,9 @@ namespace ProfileBook.ViewModel
             }
             if (parameters.TryGetValue("RadioCheck", out int Value))
             {
-                switch(Value)
+                switch (Value)
                 {
-                    case 1: 
+                    case 1:
                         SortingByName();
                         break;
                     case 2:
@@ -166,9 +168,10 @@ namespace ProfileBook.ViewModel
                     default:
                         break;
                 }
-                
+
             }
         }
+
         #endregion
 
     }

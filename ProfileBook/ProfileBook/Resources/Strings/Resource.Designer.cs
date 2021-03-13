@@ -115,7 +115,7 @@ namespace ProfileBook.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main List.
+        ///   Looks up a localized string similar to Main List                                                           .
         /// </summary>
         internal static string MainListTitle {
             get {
@@ -160,7 +160,7 @@ namespace ProfileBook.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add profile.
+        ///   Looks up a localized string similar to Add profile                                                      .
         /// </summary>
         internal static string ProfileText {
             get {
@@ -205,7 +205,7 @@ namespace ProfileBook.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign Up.
+        ///   Looks up a localized string similar to SIGN UP.
         /// </summary>
         internal static string SignUpText {
             get {

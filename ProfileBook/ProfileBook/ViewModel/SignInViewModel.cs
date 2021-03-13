@@ -1,5 +1,6 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autentification;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Profile;
 using ProfileBook.View;
@@ -16,14 +17,17 @@ namespace ProfileBook.ViewModel
         private readonly INavigationService _navigationService;
         private readonly IAutorizationService _autorization;
         private readonly IProfileService _profileService;
+        private readonly IAutentificationService _autentification;
 
         public SignInViewModel(INavigationService navigationService,
                                IAutorizationService autorization,
-                               IProfileService profileService)
+                               IProfileService profileService,
+                               IAutentificationService autentification)
         {
             _navigationService = navigationService;
             _autorization = autorization;
             _profileService = profileService;
+            _autentification = autentification;
         }
 
         #region -Public properties-
@@ -58,9 +62,8 @@ namespace ProfileBook.ViewModel
 
         private async void SignInUser()
         {
-            //TODO: Не заходит сразу после регистрации. Пофиксить!!!
-            
-            var res = CheckDb(Login, Password);
+            //TODO: Иногда не заходит после регистрации.
+            var res = _autentification.SignIn(Login, Password);
 
             if (res)
             {
@@ -87,19 +90,19 @@ namespace ProfileBook.ViewModel
             return false;
         }
 
-        private bool CheckDb(string log, string pas)
-        {
-            foreach (var item in Regs)
-            {
-                if (item.Login == log.ToString() && item.Password == pas.ToString())
-                {
-                    _autorization.GetCurrentId = item.Id;
-                    _autorization.IsAutorized = true;
-                    return true;
-                }
-            }
-            return false;
-        }
+        //private bool CheckDb(string log, string pas)
+        //{
+        //    foreach (var item in Regs)
+        //    {
+        //        if (item.Login == log.ToString() && item.Password == pas.ToString())
+        //        {
+        //            _autorization.GetCurrentId = item.Id;
+        //            _autorization.IsAutorized = true;
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         private async void Load()
         {

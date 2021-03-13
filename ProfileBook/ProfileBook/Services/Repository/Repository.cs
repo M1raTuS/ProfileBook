@@ -50,7 +50,7 @@ namespace ProfileBook.Services.Repository
         {
             return await _database.Value.UpdateAsync(entity);
         }
-        public async Task<List<T>> FindAsync<T>(Expression<Func<T,bool>> pred) where T : class,IEntityBase, new()
+        public async Task<List<T>> FindAsync<T>(Expression<Func<T, bool>> pred) where T : class, IEntityBase, new()
         {
             return await _database.Value.Table<T>().Where(pred).ToListAsync();
         }

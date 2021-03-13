@@ -136,7 +136,7 @@
     <value>Login</value>
   </data>
   <data name="MainListTitle" xml:space="preserve">
-    <value>Main List</value>
+    <value>Main List                                                           </value>
   </data>
   <data name="NameText" xml:space="preserve">
     <value>Name</value>
@@ -151,7 +151,7 @@
     <value>Password</value>
   </data>
   <data name="ProfileText" xml:space="preserve">
-    <value>Add profile</value>
+    <value>Add profile                                                      </value>
   </data>
   <data name="SelectSort" xml:space="preserve">
     <value>Select sorting type</value>
@@ -166,7 +166,7 @@
     <value>Users SignIn</value>
   </data>
   <data name="SignUpText" xml:space="preserve">
-    <value>Sign Up</value>
+    <value>SIGN UP</value>
   </data>
   <data name="SignUpTitle" xml:space="preserve">
     <value>Users SignUp</value>

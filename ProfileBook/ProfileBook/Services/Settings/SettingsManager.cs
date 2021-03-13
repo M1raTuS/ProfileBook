@@ -17,7 +17,7 @@ namespace ProfileBook.Services.Settings
         public string SelectedLanguage
         {
             get => Preferences.Get(nameof(_SelectedLanguage), nameof(SelectedLanguage));
-            
+
             set
             {
                 Preferences.Set(nameof(_SelectedLanguage), value);
@@ -32,6 +32,6 @@ namespace ProfileBook.Services.Settings
             MessagingCenter.Send<object, CultureChangedMessage>(this,
                     string.Empty, new CultureChangedMessage(SelectedLanguage));
         }
-       
+
     }
 }

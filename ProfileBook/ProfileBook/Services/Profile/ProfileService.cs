@@ -1,7 +1,6 @@
 ﻿using ProfileBook.Models;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Repository;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -41,7 +40,7 @@ namespace ProfileBook.Services.Profile
             var list = await _repository.FindAsync<UserModel>(c => c.RegId == Id);
             if (list.Count > 0)
             {
-               users.AddRange(list);
+                users.AddRange(list);
             }
             return users;
         }

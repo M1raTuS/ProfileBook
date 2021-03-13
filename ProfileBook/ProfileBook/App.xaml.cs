@@ -3,6 +3,7 @@ using Plugin.Media;
 using Prism.Ioc;
 using Prism.Unity;
 using ProfileBook.Enum;
+using ProfileBook.Services.Autentification;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Profile;
 using ProfileBook.Services.Repository;
@@ -21,7 +22,7 @@ namespace ProfileBook
         {
 
         }
-
+       
         #region ---Ovverides---
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
@@ -30,6 +31,7 @@ namespace ProfileBook
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
             containerRegistry.RegisterInstance<IAutorizationService>(Container.Resolve<AutorizationService>());
             containerRegistry.RegisterInstance<IProfileService>(Container.Resolve<ProfileService>());
+            containerRegistry.RegisterInstance<IAutentificationService>(Container.Resolve<AutentificationService>());
 
             containerRegistry.RegisterInstance(CrossMedia.Current.Initialize());
 
@@ -46,13 +48,11 @@ namespace ProfileBook
         protected override void OnInitialized()
         {
             InitializeComponent();
-
-            AutorizationService autorization = new AutorizationService();
-            if (autorization.IsAutorized)
+            //if (IsAutorized)
             {
-                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
+               // NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
-            else
+           // else
             {
                 NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
             }
