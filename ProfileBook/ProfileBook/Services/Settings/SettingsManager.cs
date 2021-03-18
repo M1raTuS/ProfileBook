@@ -4,10 +4,18 @@ namespace ProfileBook.Services.Settings
 {
     public class SettingsManager : ISettingsManager
     {
-        public int Count
+
+        public SettingsManager()
         {
-            get => Preferences.Get(nameof(Count), 5);
-            set => Preferences.Set(nameof(Count), value);
+            //грубая настройка без проверки пользователя
+            App.CurrentLanguage = SelectedLanguage;
+
+        }
+        public string SelectedLanguage
+        {
+            get => Preferences.Get(nameof(SelectedLanguage), "EN");
+
+            set => Preferences.Set(nameof(SelectedLanguage), value);
         }
     }
 }

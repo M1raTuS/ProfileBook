@@ -2,36 +2,71 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.SignInView"
-             Title="{Binding Title}">
+             Title="{Binding Resources[SignInTitle]}">
 
-           
-    <Grid>
-        <StackLayout VerticalOptions="Center" Grid.Row="1" Spacing="10" Margin="40">
-            
-            <Entry Text="{Binding Login}"
-               Placeholder="Login"/>
-            
-            <Entry Text="{Binding Password}"
-               IsPassword="True"
-               Placeholder="Password"/>
-            
-        </StackLayout>
-        <StackLayout VerticalOptions="Center" Margin="40" Grid.Row="3"  Spacing="10">
-            <Button  Text="Sign In"  BackgroundColor="DarkOrange" Command="{Binding SignInCommand}" IsEnabled="{Binding ButtonEnabled}" />
-            <Label HorizontalOptions = "Center"
-                   VerticalOptions="CenterAndExpand">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text = "SIGN UP"
-                              TextColor = "Blue"
-                              TextDecorations = "Underline">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SignUpCommand}" />
-                            </Span.GestureRecognizers>
-                        </Span>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-        </StackLayout>
+
+    <Grid BackgroundColor="{DynamicResource BackgroundColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+
+        <Entry  Grid.Row="2"
+                Grid.Column="1"
+                Text="{Binding Login}"
+                Placeholder="{Binding Resources[Login]}"
+                PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                BackgroundColor="{DynamicResource FrameColor}"
+                TextColor="{DynamicResource TextPrimaryColor}"/>
+
+        <Entry  Grid.Row="4"
+                Grid.Column="1"
+                Text="{Binding Password}"
+                IsPassword="True"
+                Placeholder="{Binding Resources[Password]}"
+                PlaceholderColor="{DynamicResource TextSecondaryColor}"
+                BackgroundColor="{DynamicResource FrameColor}"
+                TextColor="{DynamicResource TextPrimaryColor}"/>
+
+
+
+        <Button  Grid.Row="7"
+                 Grid.Column="1"
+                 Text="{Binding Resources[SignInText]}"  
+                 BackgroundColor="DarkOrange" 
+                 Command="{Binding SignInCommand}" 
+                 IsEnabled="{Binding ButtonEnabled}" />
+
+        <Label Grid.Row="8"
+               Grid.Column="1"
+               HorizontalOptions = "Center"
+               VerticalOptions="CenterAndExpand">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text = "{Binding Resources[SignUpText]}"
+                          TextColor = "Blue"
+                          TextDecorations = "Underline">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SignUpCommand}" />
+                        </Span.GestureRecognizers>
+                    </Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
     </Grid>
 </ContentPage>
+

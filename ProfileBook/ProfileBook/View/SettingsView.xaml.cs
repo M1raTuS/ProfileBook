@@ -1,12 +1,13 @@
-﻿using Xamarin.Forms;
+﻿
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ProfileBook.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SignInView : ContentPage
+    public partial class SettingsView : ContentPage
     {
-        public SignInView()
+        public SettingsView()
         {
             InitializeComponent();
         }

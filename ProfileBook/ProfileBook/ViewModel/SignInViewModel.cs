@@ -1,12 +1,13 @@
-﻿using Prism.Navigation;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autentification;
 using ProfileBook.Services.Autorization;
-using ProfileBook.Services.Repository;
+using ProfileBook.Services.Profile;
 using ProfileBook.View;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -15,29 +16,22 @@ namespace ProfileBook.ViewModel
     public class SignInViewModel : BaseViewModel
     {
         private readonly INavigationService _navigationService;
-        private readonly IRepository _repository;
         private readonly IAutorizationService _autorization;
+        private readonly IProfileService _profileService;
+        private readonly IAutentificationService _autentification;
 
         public SignInViewModel(INavigationService navigationService,
-                                IRepository repository,
-                                IAutorizationService autorization)
+                               IAutorizationService autorization,
+                               IProfileService profileService,
+                               IAutentificationService autentification)
         {
-            Title = "Users SignIn";
-
             _navigationService = navigationService;
-            _repository = repository;
             _autorization = autorization;
-
+            _profileService = profileService;
+            _autentification = autentification;
         }
 
         #region -Public properties-
-
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
 
         private string _login;
         public string Login
@@ -67,16 +61,18 @@ namespace ProfileBook.ViewModel
 
         #region -Methods-
 
-        private async void SignInUser(object obj)
+        private async void SignInUser()
         {
-            var res = _autorization.SignIn(Login,Password);
+            //TODO: Иногда не заходит после регистрации.
+            var res = _autentification.SignIn(Login, Password);
+
             if (res)
             {
                 await _navigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid login or password!", "Ok");
+                UserDialogs.Instance.Alert("Invalid login or password!", "Alert", "Ok");
                 Password = "";
             }
         }
@@ -95,21 +91,23 @@ namespace ProfileBook.ViewModel
             return false;
         }
 
-        private bool CheckDb(string log, string pas)
-        {
-            foreach (var item in Regs)
-            {
-                if (item.Login == log.ToString() && item.Password == pas.ToString())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        //private bool CheckDb(string log, string pas)
+        //{
+        //    foreach (var item in Regs)
+        //    {
+        //        if (item.Login == log.ToString() && item.Password == pas.ToString())
+        //        {
+        //            _autorization.GetCurrentId = item.Id;
+        //            _autorization.IsAutorized = true;
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         private async void Load()
         {
-            var _reg = await _repository.GetAllAsync<RegistrateModel>();
+            var _reg = await _profileService.GetAllProfileListAsync();
             Regs = new ObservableCollection<RegistrateModel>(_reg);
         }
 
@@ -134,7 +132,6 @@ namespace ProfileBook.ViewModel
                 }
             }
         }
-
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {

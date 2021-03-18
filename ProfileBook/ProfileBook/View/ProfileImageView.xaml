@@ -2,29 +2,32 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.ProfileImageView"
-             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms">
-    <ContentPage.Content>
+             BackgroundColor="Transparent"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
 
-        <Grid>
-            <ListView ItemsSource="{Binding Users}"
-                      HasUnevenRows="True">
-                <ListView.Behaviors>
-                    <b:EventToCommandBehavior EventName="ItemTapped"
-                                              Command="{Binding TapCommand}"
-                                              EventArgsParameterPath="Item"/>
-                </ListView.Behaviors>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout Orientation="Horizontal" Margin="0,20">
-                                    <Image Source="{Binding ProfileImage}" WidthRequest="160" HeightRequest="100" />
-                                </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+
+    <Grid Grid.Row="0" Grid.Column="0">
+        <Grid BackgroundColor="Gray" Opacity="0.9" 
+              Grid.Column="0" Grid.Row="0">
+
         </Grid>
-    </ContentPage.Content>
+        <ffimageloading:CachedImage 
+                   Source="{Binding ProfileImage}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   WidthRequest="400"
+                   HeightRequest="400"
+                   Aspect="AspectFit"
+                   LoadingPlaceholder= "pic_profile.png"
+                   ErrorPlaceholder= "pic_profile.png"
+                   DownsampleToViewSize = "true">
+        </ffimageloading:CachedImage>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapCommand}"/>
+        </Grid.GestureRecognizers>
+    </Grid>
+
+
+
 </ContentPage>
+

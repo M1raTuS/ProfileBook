@@ -1,96 +1,29 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
+using ProfileBook.Helpers;
 using ProfileBook.Models;
+using ProfileBook.Resources.Strings;
+using ProfileBook.Services.Settings;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace ProfileBook.ViewModel
 {
-    public class BaseViewModel : BindableBase, IInitialize, INavigationAware
+    public class BaseViewModel : BindableBase, IInitialize, INavigationAware, IDisposable
     {
         public UserModel _user;
         public RegistrateModel _reg;
 
+        public ObservableCollection<RegistrateModel> Registrate;
+
+        public BaseViewModel()
+        {
+            Resources = new LocalizedResources(typeof(Resource), App.CurrentLanguage);
+        }
         #region -Public properties-
 
-        public int RegId
-        {
-            get => _user.RegId;
-            set
-            {
-                _user.RegId = value;
-            }
-        }
-        public string Name
-        {
-            get => _user.Name;
-            set
-            {
-                _user.Name = value;
-            }
-        }
-
-        public string NickName
-        {
-            get => _user.NickName;
-            set
-            {
-                _user.NickName = value;
-            }
-        }
-        public string Description
-        {
-            get => _user.Description;
-            set
-            {
-                _user.Description = value;
-            }
-        }
-
-        public DateTime CreateDateTime
-        {
-            get => _user.DateCreate;
-            set
-            {
-                _user.DateCreate = value;
-            }
-        }
-        public string ProfileImage
-        {
-            get => _user.ProfileImage;
-            set
-            {
-                _user.ProfileImage = value;
-            }
-        }
-        public int Id
-        {
-            get => _reg.Id;
-            set
-            {
-                _reg.Id = value;
-            }
-        }
-        public string Login
-        {
-            get => _reg.Login;
-            set
-            {
-                _reg.Login = value;
-            }
-        }
-
-        public string Password
-        {
-            get => _reg.Password;
-            set
-            {
-                _reg.Password = value;
-            }
-        }
 
         private ObservableCollection<UserModel> users;
         public ObservableCollection<UserModel> Users
@@ -106,15 +39,10 @@ namespace ProfileBook.ViewModel
             set => SetProperty(ref regs, value);
         }
 
+
         #endregion
 
         #region -Methods-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
@@ -128,10 +56,28 @@ namespace ProfileBook.ViewModel
 
         public virtual void Initialize(INavigationParameters parameters)
         {
-            
+
+        }
+
+        public void Dispose()
+        {
+
         }
 
         #endregion
+        public LocalizedResources Resources
+        {
+            get;
+            private set;
+        }
+
+
+        public void OnPropertyChanged([CallerMemberName] string property = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
     }
 }

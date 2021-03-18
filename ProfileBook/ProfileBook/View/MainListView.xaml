@@ -1,90 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ProfileBook"
              x:Class="ProfileBook.View.MainListView"
-             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms">
-    
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Main List" Priority="0"/>
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Name="" Order="Primary" Priority="0" />
-        <ToolbarItem Text="LogOut" Command="{Binding LogOutCommand}" IconImageSource="ic_exit_to_app.png"/>
-        <ToolbarItem Text="Settings" Command="{Binding SettingsCommand}" IconImageSource="ic_settings.png"/>
+        <ToolbarItem Text="{Binding Resources[MainListTitle]}" Priority="0"/>
+        <ToolbarItem Text="LogOut" Command="{Binding LogOutCommand}" IconImageSource="ic_exit_to_app.png" Priority="2"/>
+        <ToolbarItem Text="Settings" Command="{Binding SettingsCommand}" IconImageSource="ic_settings.png" Priority="3" />
     </ContentPage.ToolbarItems>
 
-    
-        <StackLayout>
-        <Grid>
-
+    <StackLayout>
+        <Grid BackgroundColor="{DynamicResource BackgroundColor}">
             <ListView x:Name="UsersListView"
                       ItemsSource="{Binding Users}"
                       SelectedItem="{Binding SelectedItem}"
                       IsEnabled="{Binding ListEnabled}"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      SelectionMode="None">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped"
                                               Command="{Binding SelectedCommand}"
-                                              EventArgsParameterPath="Item"/>
+                                              EventArgsParameterPath="Item" />
                 </ListView.Behaviors>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
                             <ViewCell.ContextActions>
                                 <MenuItem Text="Edit"
                                           Command="{Binding Path=BindingContext.EditContext, Source={Reference UsersListView}}"
                                           CommandParameter="{Binding .}"/>
                                 <MenuItem Text="Delete"
-                                          IsDestructive="True"
                                           Command="{Binding Path=BindingContext.DeleteContext, Source={Reference UsersListView}}"
-                                          CommandParameter="{Binding .}"/>
+                                          CommandParameter="{Binding .}"
+                                          IsDestructive="True"/>
                             </ViewCell.ContextActions>
                             <ViewCell.View>
-                        <StackLayout Orientation="Horizontal" Margin="0,20">
-                            <Image Source="{Binding ProfileImage}" WidthRequest="160" HeightRequest="100" />
-                            <StackLayout>
-                                <Label Text="{Binding NickName}" FontSize="Medium" />
-                                <Label Text="{Binding Name}" FontSize="Medium" />
-                                    <Label Text="{Binding DateCreate}" FontSize="Medium" />
-                                    <Label Text="{Binding Id}" FontSize="Medium" />
+                                <StackLayout Orientation="Horizontal" Margin="0,20">
+                                    <ffimageloading:CachedImage 
+                                          Source="{Binding ProfileImage}"
+                                          WidthRequest="160"
+                                          HeightRequest="100"
+                                          Aspect="AspectFit"
+                                          LoadingPlaceholder= "pic_profile.png"
+                                          ErrorPlaceholder= "pic_profile.png"
+                                          DownsampleToViewSize = "true">
+                                    </ffimageloading:CachedImage>
+
+                                    <StackLayout>
+                                        <Label Text="{Binding NickName}" 
+                                               FontSize="Medium" 
+                                               TextColor="{DynamicResource TextPrimaryColor}"/>
+                                        <Label Text="{Binding Name}" 
+                                               FontSize="Medium" 
+                                               TextColor="{DynamicResource TextPrimaryColor}"/>
+                                        <Label Text="{Binding DateCreate}" 
+                                               FontSize="Medium" 
+                                               TextColor="{DynamicResource TextPrimaryColor}"/>
+                                    </StackLayout>
                                 </StackLayout>
-                        </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Label Text="No profiles added" 
-               IsVisible="{Binding LabelVisible}"
-               FontSize="30" 
-               HorizontalOptions="CenterAndExpand"
-               VerticalOptions="CenterAndExpand"
-               TextColor="Red"/>
-        <Button HorizontalOptions="End"
-                VerticalOptions="End"
-                Command="{Binding AddProfileFloatingButtonCommand}" 
-                CornerRadius="100"
-                BorderWidth="10"
-                Padding="0 , 32"
-                Margin="30,30"
-                BorderColor="Black"
-                BackgroundColor="Blue"
-                ImageSource="ic_add.png"/>
-            
-            <Button HorizontalOptions="End"
-                VerticalOptions="End"
-                Command="{Binding test}" 
-                CornerRadius="100"
-                BorderWidth="10"
-                Padding="0 , 32"
-                Margin="30,130"
-                BorderColor="Black"
-                BackgroundColor="Red"
-                ImageSource="ic_add.png"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--
+            Text="{Binding Resources[EditText]}"
+            Text="{Binding Resources[DeleteText]}"
+            -->
 
+            <Label Text="{Binding Resources[NoProfilesText]}" 
+                   IsVisible="{Binding LabelVisible}"
+                   FontSize="30" 
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   TextColor="Red"/>
+
+            <Button HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Command="{Binding AddProfileFloatingButtonCommand}" 
+                    CornerRadius="100"
+                    BorderWidth="10"
+                    Padding="0 , 32"
+                    Margin="30,30"
+                    BorderColor="{DynamicResource FloatButtonColor}"
+                    BackgroundColor="Blue"
+                    ImageSource="ic_add.png"/>
         </Grid>
     </StackLayout>
 
-    
+
 </ContentPage>

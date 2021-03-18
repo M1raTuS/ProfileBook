@@ -2,24 +2,65 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProfileBook.View.SignUpView"
-             Title="{Binding Title}">
-    
-    
-    <Grid>
-        <StackLayout VerticalOptions="Center" Grid.Row="1"  Spacing="10" Padding="40">
-            <Entry Placeholder="Login" 
-                   Text="{Binding Login}"/>
-            <Entry Placeholder="Password" 
-                   Text="{Binding Password}" 
-                   IsPassword="True" />
-            <Entry Placeholder="ConfirmPassword" 
-                   Text="{Binding ConfirmPassword}" 
-                   IsPassword="True"/>
-            
+             Title="{Binding Resources[SignUpTitle]}">
 
-        </StackLayout>
-        <StackLayout Orientation="Vertical" Margin="40" Grid.Row="3" >
-            <Button BackgroundColor="DarkOrange" Text="Sign Up" Command="{Binding AddUserCommand}" IsEnabled="{Binding ButtonEnabled}"/>
-        </StackLayout>
+
+    <Grid BackgroundColor="{DynamicResource BackgroundColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+
+        <Entry Grid.Row="3"
+               Grid.Column="1"
+               Placeholder="{Binding Resources[Login]}" 
+               Text="{Binding Login}"
+               PlaceholderColor="{DynamicResource TextSecondaryColor}"
+               BackgroundColor="{DynamicResource FrameColor}"
+               TextColor="{DynamicResource TextPrimaryColor}"/>
+
+        <Entry Grid.Row="4"
+               Grid.Column="1"
+               Placeholder="{Binding Resources[Password]}" 
+               Text="{Binding Password}" 
+               IsPassword="True" 
+               PlaceholderColor="{DynamicResource TextSecondaryColor}"
+               BackgroundColor="{DynamicResource FrameColor}"
+               TextColor="{DynamicResource TextPrimaryColor}"/>
+
+        <Entry Grid.Row="5"
+               Grid.Column="1"
+               Placeholder="{Binding Resources[ConfirmPassword]}" 
+               Text="{Binding ConfirmPassword}" 
+               IsPassword="True"
+               PlaceholderColor="{DynamicResource TextSecondaryColor}"
+               BackgroundColor="{DynamicResource FrameColor}"
+               TextColor="{DynamicResource TextPrimaryColor}"/>
+
+        <Button Grid.Row="10"
+                Grid.Column="1"
+                BackgroundColor="DarkOrange" 
+                Text="{Binding Resources[SignUpText]}" 
+                Command="{Binding AddUserCommand}" 
+                IsEnabled="{Binding ButtonEnabled}"/>
+
     </Grid>
 </ContentPage>
+

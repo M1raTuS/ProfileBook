@@ -1,40 +1,31 @@
 ﻿using Prism.Navigation;
 using ProfileBook.Models;
-using ProfileBook.Services.Autorization;
-using ProfileBook.Services.Repository;
+using ProfileBook.Services.Profile;
 using ProfileBook.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace ProfileBook.ViewModel
 {
-    //TODO: Сделать адекватно тулбар view
-    //TODO: Сделать нормально выделение из списка для контекстного меню
+    //TODO: Сделать изменение языка контекстном меню
     public class MainListViewModel : BaseViewModel
     {
 
-        private INavigationService _navigationService;
-        private IRepository _repository;
-        private IAutorizationService _autorization;
+        private readonly INavigationService _navigationService;
+        private readonly IProfileService _profile;
 
         public MainListViewModel(INavigationService navigationService,
-                                 IRepository repository)
+                                 IProfileService profile)
         {
             _navigationService = navigationService;
-            _repository = repository;
-
-            Users = new ObservableCollection<UserModel>();
+            _profile = profile;
 
             LoadUsers();
-
-
         }
 
-        
         #region -Public properties-
 
         private UserModel _selectedItem;
@@ -62,7 +53,10 @@ namespace ProfileBook.ViewModel
         public ICommand SelectedCommand => new Command(TapCommand);
         public ICommand EditContext => new Command(EditContextMenu);
         public ICommand DeleteContext => new Command(DeleteContextMenu);
+        public ICommand SettingsCommand => new Command(SettingsMenu);
+
         #endregion
+
         #region -Methods-
 
         private async void LogOut()
@@ -73,12 +67,17 @@ namespace ProfileBook.ViewModel
         {
             await _navigationService.NavigateAsync(nameof(AddEditProfileView));
         }
+        private async void SettingsMenu()
+        {
+            await _navigationService.NavigateAsync(nameof(SettingsView));
+        }
         private async void TapCommand(object user)
         {
             var nav = new NavigationParameters();
             nav.Add(nameof(UserModel), (UserModel)user);
 
-            // await _navigationService.NavigateAsync(nameof(ProfileImageView), nav, false, true);
+
+            await _navigationService.NavigateAsync(nameof(ProfileImageView), nav, true, false);
         }
         private async void EditContextMenu(object obj)
         {
@@ -92,16 +91,32 @@ namespace ProfileBook.ViewModel
         {
             if (await Application.Current.MainPage.DisplayAlert("Alert", "Подтверждаете ли вы удаление?", "Ok", "Cancel"))
             {
-                await _repository.DeleteAsync((UserModel)obj);
+                await _profile.DeleteProfileAsync((UserModel)obj);
 
                 LoadUsers();
             }
-
         }
         private async void LoadUsers()
         {
-           
-            var _users = await _repository.GetAllAsync<UserModel>();
+            var _users = await _profile.GetProfileListByIdAsync();
+            Users = new ObservableCollection<UserModel>(_users);
+        }
+        private async void SortingByName()
+        {
+            var _users = await _profile.GetProfileListByIdAsync();
+            _users = _users.OrderBy(i => i.Name).ToList();
+            Users = new ObservableCollection<UserModel>(_users);
+        }
+        private async void SortingByNickName()
+        {
+            var _users = await _profile.GetProfileListByIdAsync();
+            _users = _users.OrderBy(i => i.NickName).ToList();
+            Users = new ObservableCollection<UserModel>(_users);
+        }
+        private async void SortingByDate()
+        {
+            var _users = await _profile.GetProfileListByIdAsync();
+            _users = _users.OrderBy(i => i.DateCreate).ToList();
             Users = new ObservableCollection<UserModel>(_users);
         }
 
@@ -132,27 +147,27 @@ namespace ProfileBook.ViewModel
             {
                 LoadUsers();
             }
+            if (parameters.TryGetValue("RadioCheck", out int Value))
+            {
+                switch (Value)
+                {
+                    case 1:
+                        SortingByName();
+                        break;
+                    case 2:
+                        SortingByNickName();
+                        break;
+                    case 3:
+                        SortingByDate();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
+
         #endregion
 
-
-        public ICommand test => new Command(testt);
-
-        private async void testt(object obj)
-        {   
-            var _regs = await _repository.GetAllAsync<RegistrateModel>();
-            Regs = new ObservableCollection<RegistrateModel>(_regs);
-
-            try
-            {
-                var tr = await _repository.FindAsync<RegistrateModel>(q => q.Id == 2);
-            }
-            catch (Exception e)
-            {
-
-                
-            }
-        }
     }
 }
 

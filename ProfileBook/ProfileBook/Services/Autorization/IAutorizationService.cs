@@ -2,10 +2,9 @@
 {
     public interface IAutorizationService
     {
-        bool IsAutorized { get; }
+        bool IsAutorized { get; set; }
         void Unauthorize();
+        int GetCurrentId { get; set; }
         int GetCurrentUserId();
-        bool SignIn(string Login, string Password);
-
     }
 }

@@ -1,6 +1,11 @@
-﻿using Prism.Navigation;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Autentification;
+using ProfileBook.Services.Autorization;
+using ProfileBook.Services.Profile;
 using ProfileBook.Services.Repository;
+using ProfileBook.Validation;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,27 +18,26 @@ namespace ProfileBook.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
+        private readonly IAutorizationService _autorization;
+        private readonly IProfileService _profile;
+        private readonly IAutentificationService _autentification;
 
         public SignUpViewModel(INavigationService navigationService,
-                                IRepository repository)
+                                IRepository repository,
+                                IAutorizationService autorization,
+                                IProfileService profile,
+                                IAutentificationService autentification)
         {
-            Title = "Users SignUp";
-
             _navigationService = navigationService;
             _repository = repository;
-
+            _autorization = autorization;
+            _profile = profile;
+            _autentification = autentification;
 
             Regs = new ObservableCollection<RegistrateModel>();
         }
 
         #region -Public properties-
-
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
 
         private string _login;
         public string Login
@@ -62,53 +66,54 @@ namespace ProfileBook.ViewModel
             set => SetProperty(ref _buttonEnabled, value);
         }
 
-        public ICommand AddUserCommand => new Command(AddUser);
+        public ICommand AddUserCommand => new Command(AddUserAsync);
 
         #endregion
 
         #region -Methods-
-        private async void AddUser(object obj)
+        private async void AddUserAsync(object obj)
         {
-            //if (Password == ConfirmPassword)
-            //{
-            //    var LoginValidation = Validator.StringValid(Login, Validator.Login);
-            //    var PasswordValidation = Validator.StringValid(Password, Validator.Password);
+            if (Password == ConfirmPassword)
+            {
+                var LoginValidation = Validator.StringValid(Login, Validator.Login);
+                var PasswordValidation = Validator.StringValid(Password, Validator.Password);
 
-            //    if (!LoginValidation)
-            //    {
-            //        await Application.Current.MainPage.DisplayAlert("Alert", "Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Ok");
-            //    }
-            //    else if (!PasswordValidation)
-            //    {
-            //        await Application.Current.MainPage.DisplayAlert("Alert", "Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Ok");
-            //    }
-                 if (CheckDb(Login))//else
+                if (!LoginValidation)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Этот логин уже занят", "Ok");
+                    UserDialogs.Instance.Alert("Логин должен быть не менее 4 и не более 16 символов. Логин не должен начинаться с цифер", "Alert", "Ok");
+                }
+                else if (!PasswordValidation)
+                {
+                    UserDialogs.Instance.Alert("Пароль должен быть не менее 8 и не более 16 символов. Пароль должен содержать минимум одну заглавную букву, одну строчную букву и одну цифру", "Alert", "Ok");
+                }
+                else if (_autentification.CheckLogin(Login))
+                {
+                    UserDialogs.Instance.Alert("Этот логин уже занят", "Alert", "Ok");
                 }
                 else
-            {
-                var reg = new RegistrateModel()
                 {
-                    Login = Login,
-                    Password = Password
-                };
-                
-                var id = await _repository.InsertAsync(reg);
-                reg.Id = id;
+                    var reg = new RegistrateModel()
+                    {
+                        Login = Login,
+                        Password = Password
+                    };
 
-                Regs.Add(reg);
+                    var id = await _repository.InsertAsync(reg);
 
-                var nav = new NavigationParameters();
-                nav.Add(nameof(RegistrateModel), (RegistrateModel)reg);
+                    reg.Id = id;
 
-                await _navigationService.GoBackAsync(nav, false, true);
+                    Regs.Add(reg);
+
+                    var nav = new NavigationParameters();
+                    nav.Add(nameof(RegistrateModel), (RegistrateModel)reg);
+
+                    await _navigationService.GoBackAsync(nav, false, true);
+                }
             }
-            //}
-            //else
-            //{
-            //    await Application.Current.MainPage.DisplayAlert("Alert", "Значения в полях Password и ConfirmPassword должны совпадать.", "Ok");
-            //}
+            else
+            {
+                UserDialogs.Instance.Alert("Значения в полях Password и ConfirmPassword должны совпадать.", "Alert", "Ok");
+            }
         }
 
         private bool CanSignIn()
@@ -117,19 +122,6 @@ namespace ProfileBook.ViewModel
             {
                 return true;
             }
-            return false;
-        }
-
-        private bool CheckDb(string log)
-        {
-            foreach (var item in Regs)
-            {
-                if (item.Login == log.ToString())
-                {
-                    return true;
-                }
-            }
-
             return false;
         }
 
@@ -160,6 +152,13 @@ namespace ProfileBook.ViewModel
                 }
             }
         }
+
+        public async override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            var _reg = await _repository.GetAllAsync<RegistrateModel>();
+            Regs = new ObservableCollection<RegistrateModel>(_reg);
+        }
+
         #endregion
     }
 }

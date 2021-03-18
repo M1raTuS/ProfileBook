@@ -1,17 +1,15 @@
 ﻿using ProfileBook.Models;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.Repository;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProfileBook.Services.Profile
 {
     public class ProfileService : IProfileService
     {
-        private IRepository _repository;
-        private IAutorizationService _autorizationService;
+        private readonly IRepository _repository;
+        private readonly IAutorizationService _autorizationService;
 
         public ProfileService(IRepository repository,
                               IAutorizationService autorizationService)
@@ -24,19 +22,38 @@ namespace ProfileBook.Services.Profile
             await _repository.DeleteAsync(user);
         }
 
-        public async Task<List<UserModel>> GetProfileListAsync()
+        public async Task<List<RegistrateModel>> GetAllProfileListAsync()
         {
-            throw new NotImplementedException();
+            var users = new List<RegistrateModel>();
+            var list = await _repository.GetAllAsync<RegistrateModel>();
+            if (list.Count > 0)
+            {
+                users.AddRange(list);
+            }
+            return users;
         }
 
-        public async  Task SaveProfileAsync(UserModel user)
+        public async Task<List<UserModel>> GetProfileListByIdAsync()
         {
-            throw new NotImplementedException();
+            var users = new List<UserModel>();
+            var Id = _autorizationService.GetCurrentUserId();
+            var list = await _repository.FindAsync<UserModel>(c => c.RegId == Id);
+            if (list.Count > 0)
+            {
+                users.AddRange(list);
+            }
+            return users;
+        }
+
+
+        public async Task SaveProfileAsync(UserModel user)
+        {
+            await _repository.InsertAsync(user);
         }
 
         public async Task UpdateProfileAsync(UserModel user)
         {
-            throw new NotImplementedException();
+            await _repository.UpdateAsync(user);
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface ISettingsManager
     {
-        int Count { get; set; }
+        string SelectedLanguage { get; set; }
     }
 }
